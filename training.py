@@ -25,7 +25,7 @@ from diffusers.hub_utils import init_git_repo, push_to_hub
 from diffusers.optimization import get_scheduler
 from diffusers.pipelines.stable_diffusion import StableDiffusionSafetyChecker
 from transformers import CLIPFeatureExtractor, CLIPTextModel, CLIPTokenizer
-from huggingface_hub import hf_api
+from huggingface_hub.hf_api import HfApi
 
 import bitsandbytes as bnb
 
@@ -33,10 +33,11 @@ from pathlib import Path
 
 from utils import DreamBoothDataset, PromptDataset, training_function
 
-#set the access token
 
+#set the access token
+hf_api = HfApi()
 hf_api.USERNAME_PLACEHOLDER = "arshy"
-hf_api.api.set_access_token(access_token="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")
+hf_api.set_access_token(access_token=os.getenv("HF_ACCESS_TOKEN"))
 
 #Arguments
 pretrained_model_name_or_path = "CompVis/stable-diffusion-v1-4"
@@ -86,18 +87,24 @@ if(prior_preservation):
 
 #Load the Stable Diffusion model
 text_encoder = CLIPTextModel.from_pretrained(
-    pretrained_model_name_or_path, subfolder="text_encoder", use_auth_token=True
+    pretrained_model_name_or_path, 
+    subfolder="text_encoder", 
+    use_auth_token=os.getenv("HF_ACCESS_TOKEN")
 )
 vae = AutoencoderKL.from_pretrained(
-    pretrained_model_name_or_path, subfolder="vae", use_auth_token=True
+    pretrained_model_name_or_path, 
+    subfolder="vae", 
+    use_auth_token=os.getenv("HF_ACCESS_TOKEN")
 )
 unet = UNet2DConditionModel.from_pretrained(
-    pretrained_model_name_or_path, subfolder="unet", use_auth_token=True
+    pretrained_model_name_or_path, 
+    subfolder="unet", 
+    use_auth_token=os.getenv("HF_ACCESS_TOKEN")
 )
 tokenizer = CLIPTokenizer.from_pretrained(
     pretrained_model_name_or_path,
     subfolder="tokenizer",
-    use_auth_token=True,
+    use_auth_token=os.getenv("HF_ACCESS_TOKEN"),
 )
 
 args = Namespace(

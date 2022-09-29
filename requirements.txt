@@ -1,7 +1,9 @@
 streamlit
+huggingface_hub
 accelerate
 tensorboard 
 transformers 
+torchvision
 ftfy 
 gradio 
 #"ipywidgets>=7,<8" 
