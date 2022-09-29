@@ -1,0 +1,8 @@
+streamlit
+accelerate
+tensorboard 
+transformers 
+ftfy 
+gradio 
+#"ipywidgets>=7,<8" 
+bitsandbytes
