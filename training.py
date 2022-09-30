@@ -17,6 +17,7 @@ import torch.utils.checkpoint
 from torch.utils.data import Dataset
 from torchvision import transforms
 
+import accelerate
 from accelerate import Accelerator
 from accelerate.logging import get_logger
 from accelerate.utils import set_seed
@@ -41,9 +42,10 @@ hf_api.set_access_token(access_token=os.getenv("HF_ACCESS_TOKEN"))
 
 #Arguments
 pretrained_model_name_or_path = "CompVis/stable-diffusion-v1-4"
-instance_prompt = os.getenv("INS_PROMPT")
+instance_prompt = "beautiful sks hafsah" #os.getenv("INS_PROMPT")
+
 prior_preservation = False 
-prior_preservation_class_prompt = os.getenv("PRIOR_PROMPT")
+prior_preservation_class_prompt = "beautiful girl, child" # os.getenv("PRIOR_PROMPT")
 save_path = "input_images"
 
 #Advanced settings for prior preservation (optional)
@@ -68,6 +70,7 @@ if(prior_preservation):
         pipeline.set_progress_bar_config(disable=True)
 
         num_new_images = num_class_images - cur_class_images
+        print(num_new_images)
         print(f"Number of class images to sample: {num_new_images}.")
 
         sample_dataset = PromptDataset(class_prompt, num_new_images)
@@ -85,7 +88,7 @@ if(prior_preservation):
         with torch.no_grad():
           torch.cuda.empty_cache()
 
-#Load the Stable Diffusion model
+# #Load the Stable Diffusion model
 text_encoder = CLIPTextModel.from_pretrained(
     pretrained_model_name_or_path, 
     subfolder="text_encoder", 
@@ -99,8 +102,10 @@ vae = AutoencoderKL.from_pretrained(
 unet = UNet2DConditionModel.from_pretrained(
     pretrained_model_name_or_path, 
     subfolder="unet", 
-    use_auth_token=os.getenv("HF_ACCESS_TOKEN")
+    use_auth_token=os.getenv("HF_ACCESS_TOKEN"),
+    gradient_checkpointing=True
 )
+
 tokenizer = CLIPTokenizer.from_pretrained(
     pretrained_model_name_or_path,
     subfolder="tokenizer",
@@ -119,7 +124,7 @@ args = Namespace(
     gradient_accumulation_steps=2,
     max_grad_norm=1.0,
     mixed_precision="no", # set to "fp16" for mixed-precision training.
-    gradient_checkpointing=True, # set this to True to lower the memory usage.
+    # gradient_checkpointing=True, # set this to True to lower the memory usage.
     use_8bit_adam=True, # use 8bit optimizer from bitsandbytes
     seed=3434554,
     with_prior_preservation=prior_preservation, 
@@ -131,6 +136,7 @@ args = Namespace(
     output_dir="output",
 )
 
-accelerate.notebook_launcher(training_function, args=(args, text_encoder, vae, unet))
+accelerate.notebook_launcher(training_function, args=(args, text_encoder, vae, unet, tokenizer), num_processes=1)
 with torch.no_grad():
     torch.cuda.empty_cache()
+

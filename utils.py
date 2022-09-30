@@ -121,7 +121,7 @@ class PromptDataset(Dataset):
 
 
 #training function
-def training_function(args, text_encoder, vae, unet):
+def training_function(args, text_encoder, vae, unet, tokenizer):
     logger = get_logger(__name__)
 
     accelerator = Accelerator(
@@ -129,8 +129,8 @@ def training_function(args, text_encoder, vae, unet):
         mixed_precision=args.mixed_precision,
     )
 
-    if args.gradient_checkpointing:
-        unet.enable_gradient_checkpointing()
+    # if args.gradient_checkpointing:
+    #     unet.enable_gradient_checkpointing()
 
     # Use 8-bit Adam for lower memory usage or to fine-tune the model in 16GB GPUs
     if args.use_8bit_adam:
