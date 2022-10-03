@@ -129,9 +129,6 @@ def training_function(args, text_encoder, vae, unet, tokenizer):
         mixed_precision=args.mixed_precision,
     )
 
-    # if args.gradient_checkpointing:
-    #     unet.enable_gradient_checkpointing()
-
     # Use 8-bit Adam for lower memory usage or to fine-tune the model in 16GB GPUs
     if args.use_8bit_adam:
         optimizer_class = bnb.optim.AdamW8bit
@@ -266,7 +263,7 @@ def training_function(args, text_encoder, vae, unet, tokenizer):
                 break
 
         accelerator.wait_for_everyone()
-    
+
     # Create the pipeline using using the trained modules and save it.
     if accelerator.is_main_process:
         pipeline = StableDiffusionPipeline(
