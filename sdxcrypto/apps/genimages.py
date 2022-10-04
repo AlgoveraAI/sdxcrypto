@@ -1,18 +1,16 @@
 import os
+import requests 
 import streamlit as st
-from .utils.tracker import BaseModels 
-from .utils.inference import Inference 
+from sdxcrypto.api.tracker import BaseModels
 
 
 def app():
-    bm = BaseModels()
-    inf = Inference()
-
     st.write("""
     Generate Awesome Images
     """)
+    bm = BaseModels()
 
-    option = st.selectbox(
+    base_model = st.selectbox(
         'Choose your model',
         (bm.base_models()))
 
@@ -65,7 +63,20 @@ def app():
         os.environ["SEED"] = str(seed)
 
     def gen_image():
-        set_parameters()
-        inf.run_inference()
+        url = "http://localhost:3333/generate"
+        
+        parameters = {
+            "base_model":base_model,
+            "prompt":prompt,
+            "num_samples":num_samples,
+            "inf_steps": inf_steps,
+            "guidance_scale":guidance_scale,
+            "height":height,
+            "width":width,
+            "seed":seed
+
+        }
+
+        response = requests.post(url=url, params=parameters)
 
     st.button(label="Diffuse My Images", on_click=gen_image)

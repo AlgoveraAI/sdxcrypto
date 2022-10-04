@@ -10,26 +10,31 @@ class Inference:
     def __init__(self):
         #holds different pipe
         self.pipes = {}
-        self.data = pd.read_csv("storage/data.csv")
+        self.data = pd.read_csv("./storage/data.csv")
         self.hf_token = "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"
         self.image_output_dir = "storage/output_images"
 
-    def run_inference(self):
-        prompt, model_name, num_samples, height, width, inf_steps, guidance_scale, seed = self.get_params()
-        pipe = self.get_pipe(model_name)
-        images = self.inference(pipe, prompt, num_samples, height, width, inf_steps, guidance_scale, seed)
-    
-    def get_params(self):
-        prompt = os.getenv("PROMPT")
-        option = os.getenv("OPTION") 
-        num_samples = int(os.getenv("NUM_SAMPLES"))
-        height = int(os.getenv("HEIGHT"))
-        width = int(os.getenv("WIDTH"))
-        inf_steps = int(os.getenv("INF_STEPS"))
-        guidance_scale = int(os.getenv("GUIDANCE_SCALE"))
-        seed = int(os.getenv("SEED"))
-        print(prompt, option)
-        return prompt, option, num_samples, height, width, inf_steps, guidance_scale, seed
+    def run_inference(self, params):
+        prompt = params["prompt"]
+        base_model = params["base_model"]
+        num_samples = params["num_samples"]
+        height = params["height"]
+        width = params["width"]
+        inf_steps = params["inf_steps"]
+        guidance_scale = params["guidance_scale"]
+        seed = params["seed"]
+
+        pipe = self.get_pipe(base_model)
+        
+        images = self.inference(pipe, 
+                                prompt, 
+                                num_samples, 
+                                height, 
+                                width, 
+                                inf_steps, 
+                                guidance_scale, 
+                                seed)
+        return images
 
     def get_pipe(self, model_name):
         # check if there is already the pipe in pipes
