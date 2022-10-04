@@ -52,9 +52,9 @@ def app():
 
     seed = st.number_input(label="seed", step=1)
     
-    def set_parameters(option=option, prompt=prompt, num_samples=num_samples):
+    def set_parameters():
         os.environ["PROMPT"] = prompt
-        os.environ["OPTION"] = option
+        os.environ["BASE_MODEL"] = base_model
         os.environ["NUM_SAMPLES"] = str(num_samples)
         os.environ["HEIGHT"] = str(height)
         os.environ["WIDTH"] = str(width)
@@ -66,14 +66,14 @@ def app():
         url = "http://localhost:3333/generate"
         
         parameters = {
-            "base_model":base_model,
-            "prompt":prompt,
-            "num_samples":num_samples,
-            "inf_steps": inf_steps,
-            "guidance_scale":guidance_scale,
-            "height":height,
-            "width":width,
-            "seed":seed
+            "base_model":os.getenv("BASE_MODEL"),
+            "prompt":os.getenv("PROMPT"),
+            "num_samples":os.getenv("NUM_SAMPLES"),
+            "inf_steps": os.getenv("INF_STEPS"),
+            "guidance_scale":os.getenv("GUIDANCE_SCALE"),
+            "height":os.getenv("HEIGHT"),
+            "width":os.getenv("WIDTH"),
+            "seed":os.getenv("SEED")
 
         }
 

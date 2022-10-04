@@ -39,6 +39,8 @@ class Training:
     def __init__(self):
         self.access_token="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"
         self.concept_name = None
+        self.cwd = os.getcwd() 
+
     def get_params(self):
         
         #Arguments
@@ -48,14 +50,14 @@ class Training:
         resolution = int(os.getenv("RESOLUTION"))
         prior_preservation = True if os.getenv("PRIOR") == "Yes" else False 
         prior_preservation_class_prompt = os.getenv("PRIOR_PROMPT")
-        instance_data_dir = f"storage/{self.concept_name}/input_images"
-        output_dir = f"storage/{self.concept_name}/output" 
+        instance_data_dir = f"{self.cwd}/storage/{self.concept_name}/input_images"
+        output_dir = f"{self.cwd}/storage/{self.concept_name}/output" 
 
         #Advanced settings for prior preservation (optional)
         num_class_images = 12 
         sample_batch_size = 2
         prior_loss_weight = 1 
-        prior_preservation_class_folder = f"storage/{self.concept_name}/class_images" 
+        prior_preservation_class_folder = f"{self.cwd}/storage/{self.concept_name}/class_images" 
         class_data_root=prior_preservation_class_folder
 
         args = Namespace(
@@ -143,10 +145,11 @@ class Training:
                 del pipeline
                 with torch.no_grad():
                     torch.cuda.empty_cache()
+
     def record_model(self, model_dir):
-        data =pd.read_csv("storage/data.csv")
+        data =pd.read_csv(f"{self.cwd}/storage/data.csv")
         data.loc[len(data)] = ["custom_model", self.concept_name, model_dir]
-        data.to_csv("storage/data.csv", index=False)
+        data.to_csv(f"{self.cwd}/storage/data.csv", index=False)
 
     def run_training(self):
         args = self.get_params()

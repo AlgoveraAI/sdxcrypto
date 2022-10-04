@@ -1,8 +1,9 @@
 fastapi
 uvicorn
 streamlit
-diffuser
+diffusers
 accelerate
+torchvision
 tensorboard 
 transformers 
 ftfy 

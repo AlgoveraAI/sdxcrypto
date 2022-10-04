@@ -1,18 +1,19 @@
 
 import os 
 import uuid
-from PIL import Image
 import pandas as pd
+from PIL import Image
 import torch
 from diffusers import StableDiffusionPipeline, LMSDiscreteScheduler
 
 class Inference:
     def __init__(self):
         #holds different pipe
+        self.cwd =os.getcwd()
         self.pipes = {}
-        self.data = pd.read_csv("./storage/data.csv")
+        self.data = pd.read_csv(f"{self.cwd}/storage/data.csv")
+        self.image_output_dir = f"{self.cwd}/storage/output_images"
         self.hf_token = "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"
-        self.image_output_dir = "storage/output_images"
 
     def run_inference(self, params):
         prompt = params["prompt"]
@@ -40,7 +41,6 @@ class Inference:
         # check if there is already the pipe in pipes
         # if yes and the selected model is same return
         # if model different - set up and add to pipes and return pipe
-        print(self.pipes)
         if model_name in self.pipes:
             return self.pipes[model_name]
 
@@ -72,7 +72,6 @@ class Inference:
     def inference(self, pipe, prompt, num_samples, height=256, width=256, inf_steps=50, guidance_scale=7.5, seed=69):
         all_images = [] 
         with torch.autocast("cuda"):
-            print(prompt)
             images = pipe([prompt] * num_samples, 
                           num_inference_steps=inf_steps, 
                           guidance_scale=guidance_scale,

@@ -1,0 +1,11 @@
+version: '3'
+services:
+  fastapi:
+    build:
+      context: ./
+      dockerfile: Dockerfile.api 
+    container_name: fastapi
+    ports:
+      - 80:5000
+    volumes:
+      - ./sdxcrypto:/app/sdxcrypto

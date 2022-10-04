@@ -1,6 +1,6 @@
 import streamlit as st
 from multiapp import MultiApp
-from apps import home, genimages, newconcepts # import your app modules here
+from sdxcrypto.apps import home, genimages, newconcepts # import your app modules here
 
 app = MultiApp()
 

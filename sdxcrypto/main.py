@@ -21,13 +21,13 @@ class GenerateBody(BaseModel):
 app = FastAPI()
 
 #extend infence and train modules
-inf = Inference()
 track = BaseModels()
+inf = Inference()
 trn =  Training()
 
 @app.get("/")
 def homepage():
-    return "Algovera SD x Crypto API"
+    return "Algovera SD x Crypto API!"
 
 #endpoint for generating images
 @app.post("/generate")

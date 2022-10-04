@@ -9,3 +9,4 @@ ftfy
 gradio
 bitsandbytes
 requests
+python-multipart
