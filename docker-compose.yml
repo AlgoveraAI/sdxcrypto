@@ -3,8 +3,15 @@ services:
   fastapi:
     build:
       context: ./
-      dockerfile: Dockerfile.api 
+      dockerfile: api.Dockerfile
     container_name: fastapi
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
     ports:
       - 80:5000
     volumes:
@@ -12,11 +19,9 @@ services:
   frontend:
     build:
       context: ./
-      dockerfile: Dockerfile.streamlit 
+      dockerfile: streamlit.Dockerfile 
     container_name: frontend
     ports:
       - 8501:8501
     volumes:
       - ./sdxcrypto:/app/sdxcrypto
-
-
