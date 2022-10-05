@@ -65,7 +65,7 @@ def app():
         print(prompt, base_model, num_samples, height, width, inf_steps, guidance_scale, seed)
 
     def gen_image():
-        url = "http://34.242.63.47/generate"
+        url = "http://fastapi:5000/generate"
         
         set_parameters()
         
