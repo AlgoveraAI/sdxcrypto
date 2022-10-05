@@ -1,4 +1,4 @@
-version: '3'
+version: '3.9'
 services:
   fastapi:
     build:
@@ -9,3 +9,14 @@ services:
       - 80:5000
     volumes:
       - ./sdxcrypto:/app/sdxcrypto
+  frontend:
+    build:
+      context: ./
+      dockerfile: Dockerfile.streamlit 
+    container_name: frontend
+    ports:
+      - 8501:8501
+    volumes:
+      - ./sdxcrypto:/app/sdxcrypto
+
+

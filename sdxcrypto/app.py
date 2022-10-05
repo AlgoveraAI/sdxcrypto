@@ -5,7 +5,7 @@ from sdxcrypto.apps import home, genimages, newconcepts # import your app module
 app = MultiApp()
 
 st.markdown("""
-# Stable Diffusion x Crypto 
+# Stable Diffusion x Crypto
 Your creative assistant. Take your writings to the next level.
 """)
 

@@ -24,7 +24,6 @@ class Inference:
         inf_steps = params["inf_steps"]
         guidance_scale = params["guidance_scale"]
         seed = params["seed"]
-
         pipe = self.get_pipe(base_model)
         
         images = self.inference(pipe, 
@@ -46,7 +45,6 @@ class Inference:
 
         else:
             model_type = self.data[self.data["model_name"] == model_name]["model_type"].values[0]
-            print(model_type)
             if model_type == "base_model":
                 # scheduler = LMSDiscreteScheduler(beta_start=0.00085, beta_end=0.012, beta_schedule="scaled_linear")
                 pipe = StableDiffusionPipeline.from_pretrained(
@@ -60,7 +58,6 @@ class Inference:
 
             else:
                 model_dir = self.data[self.data["model_name"] == model_name]["model_dir"].values[0]
-                print(model_dir)
                 pipe = StableDiffusionPipeline.from_pretrained(
                                                                 model_dir,
                                                                 revision="fp16", 

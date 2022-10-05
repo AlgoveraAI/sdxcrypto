@@ -27,10 +27,10 @@ trn =  Training()
 
 @app.get("/")
 def homepage():
-    return "Algovera SD x Crypto API!"
+    return "Algovera SD x Crypto API"
 
 #endpoint for generating images
 @app.post("/generate")
 def generate(params:GenerateBody):
-    images = inf.run_inference(params=params)
-    return images
+    images = inf.run_inference(params=dict(params))
+    return params.json()

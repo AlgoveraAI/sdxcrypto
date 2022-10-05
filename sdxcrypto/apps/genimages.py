@@ -62,21 +62,25 @@ def app():
         os.environ["GUIDANCE_SCALE"] = str(guidance_scale)
         os.environ["SEED"] = str(seed)
 
+        print(prompt, base_model, num_samples, height, width, inf_steps, guidance_scale, seed)
+
     def gen_image():
-        url = "http://localhost:3333/generate"
+        url = "http://34.242.63.47/generate"
+        
+        set_parameters()
         
         parameters = {
             "base_model":os.getenv("BASE_MODEL"),
             "prompt":os.getenv("PROMPT"),
-            "num_samples":os.getenv("NUM_SAMPLES"),
-            "inf_steps": os.getenv("INF_STEPS"),
-            "guidance_scale":os.getenv("GUIDANCE_SCALE"),
-            "height":os.getenv("HEIGHT"),
-            "width":os.getenv("WIDTH"),
-            "seed":os.getenv("SEED")
+            "num_samples":int(os.getenv("NUM_SAMPLES")),
+            "inf_steps": int(os.getenv("INF_STEPS")),
+            "guidance_scale":float(os.getenv("GUIDANCE_SCALE")),
+            "height":int(os.getenv("HEIGHT")),
+            "width":int(os.getenv("WIDTH")),
+            "seed":int(os.getenv("SEED"))
 
         }
 
-        response = requests.post(url=url, params=parameters)
+        response = requests.post(url=url, json=parameters)
 
     st.button(label="Diffuse My Images", on_click=gen_image)
