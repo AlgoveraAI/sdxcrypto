@@ -34,22 +34,24 @@ import bitsandbytes as bnb
 from pathlib import Path
 
 from .utils import DreamBoothDataset, PromptDataset, training_function
+from .tracker import BaseModels
 
 class Training:
     def __init__(self):
         self.access_token="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"
         self.concept_name = None
         self.cwd = os.getcwd() 
+        self.tracker = BaseModels()
 
-    def get_params(self):
+    def get_params(self, params):
         
         #Arguments
-        pretrained_model_name_or_path = os.getenv("MODEL")
-        self.concept_name = os.getenv("CONCEPT_NAME")
-        instance_prompt = os.getenv("INS_PROMPT")
-        resolution = int(os.getenv("RESOLUTION"))
-        prior_preservation = True if os.getenv("PRIOR") == "Yes" else False 
-        prior_preservation_class_prompt = os.getenv("PRIOR_PROMPT")
+        pretrained_model_name_or_path = params['base_model']
+        self.concept_name = params['concept_name']
+        ins_prompt = params['ins_prompt']
+        resolution = params['resolution']
+        prior_preservation = params['prior'] 
+        prior_preservation_class_prompt = params['prior_prompt']
         instance_data_dir = f"{self.cwd}/storage/{self.concept_name}/input_images"
         output_dir = f"{self.cwd}/storage/{self.concept_name}/output" 
 
@@ -65,7 +67,7 @@ class Training:
                 resolution=resolution,
                 center_crop=True,
                 instance_data_dir=instance_data_dir,
-                instance_prompt=instance_prompt,
+                instance_prompt=ins_prompt,
                 learning_rate=5e-06,
                 max_train_steps=400,
                 train_batch_size=1,
@@ -84,9 +86,6 @@ class Training:
                 output_dir=output_dir,
             )
         return args
-
-    def get_pipe(self):
-        pass
 
     def load_pipe(self, model_name):
         #Load the Stable Diffusion model
@@ -148,16 +147,25 @@ class Training:
 
     def record_model(self, model_dir):
         data =pd.read_csv(f"{self.cwd}/storage/data.csv")
-        data.loc[len(data)] = ["custom_model", self.concept_name, model_dir]
+        
+        data.loc[len(data)] = tosave
         data.to_csv(f"{self.cwd}/storage/data.csv", index=False)
+        return tosave
 
-    def run_training(self):
-        args = self.get_params()
-        text_encoder, vae, unet, tokenizer = self.load_pipe(vars(args)["pretrained_model_name_or_path"])
-        accelerate.notebook_launcher(training_function, args=(args, text_encoder, vae, unet, tokenizer), num_processes=1)
+    def run_training(self, params):
         with torch.no_grad():
             torch.cuda.empty_cache()
-        self.record_model(vars(args)["output_dir"])
+        
+        args = self.get_params(params)
+        text_encoder, vae, unet, tokenizer = self.load_pipe(vars(args)["pretrained_model_name_or_path"])
+        accelerate.notebook_launcher(training_function, args=(args, text_encoder, vae, unet, tokenizer), num_processes=1)
+        
+        with torch.no_grad():
+            torch.cuda.empty_cache()
+        
+        tosave = ["custom_model", self.concept_name, vars(args)["output_dir"]] 
+        self.tracker.add_data(tosave)
+        return tosave
 
 
 

@@ -1,5 +1,7 @@
 
-import os 
+import os
+import io
+import numpy as np
 import uuid
 import pandas as pd
 from PIL import Image
@@ -41,6 +43,7 @@ class Inference:
         # if yes and the selected model is same return
         # if model different - set up and add to pipes and return pipe
         if model_name in self.pipes:
+            print("model_name in pipe")
             return self.pipes[model_name]
 
         else:
@@ -53,8 +56,6 @@ class Inference:
                                                                use_auth_token=self.hf_token,
                                                                revision="fp16", 
                                                                torch_dtype=torch.float16).to("cuda")
-                self.pipes[model_name] = pipe
-                return pipe
 
             else:
                 model_dir = self.data[self.data["model_name"] == model_name]["model_dir"].values[0]
@@ -63,12 +64,12 @@ class Inference:
                                                                 revision="fp16", 
                                                                 torch_dtype=torch.float16,
                                                             ).to("cuda")
-                self.pipes[model_name] = pipe          
-                return pipe
+            self.pipes[model_name] = pipe          
+            return pipe
 
     def inference(self, pipe, prompt, num_samples, height=256, width=256, inf_steps=50, guidance_scale=7.5, seed=69):
         all_images = [] 
-        with torch.autocast("cuda"):
+        with torch.cuda.amp.autocast():
             images = pipe([prompt] * num_samples, 
                           num_inference_steps=inf_steps, 
                           guidance_scale=guidance_scale,
@@ -79,11 +80,16 @@ class Inference:
             all_images.extend(images)
 
         self.mk_dir()
-
         [img.save(f"{self.image_output_dir }/{uuid.uuid4().hex}.jpg") for img in all_images]
         
         return all_images
     
     def mk_dir(self):
         if not os.path.exists(self.image_output_dir):
-            os.mkdir(image_output_dir)
+            os.mkdir(self.image_output_dir)
+
+    def image_to_np(self, image: Image) -> bytes:
+        buf = io.BytesIO()
+        image.save(buf, format='JPEG')
+        byte_im = buf.getvalue()
+        return byte_im

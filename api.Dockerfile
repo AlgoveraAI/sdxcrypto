@@ -8,4 +8,4 @@ RUN pip install -e .
 
 EXPOSE 5000
 
-CMD ["uvicorn", "sdxcrypto.main:app", "--reload", "--host", "0.0.0.0", "--port", "5000"]
+# CMD ["uvicorn", "sdxcrypto.main:app", "--reload", "--host", "0.0.0.0", "--port", "5000"]
