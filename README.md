@@ -50,21 +50,28 @@ As part of this project, we are collating different tools the community use. Ple
 
 **Front-End Framework**
 - React
+
 **API**
 - FastAPI
+
 **ML Framework**
 - PyTorch
 - Huggingface
+
 **DevOps**
 - Kubernettes
+
 **Database**
 - PostgreSQL
+
 **Cloud Provider**
 - Vast.ai
 - Banana.dev
 - AWS
+
 **Authentication Tool**
 - 
+
 **Payment Gateway**
 - 
 
