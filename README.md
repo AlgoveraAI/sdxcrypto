@@ -7,32 +7,32 @@ Creative art has been a feature of human intelligence since the dawn of humanity
 In this project, we would like to explore creating a workflow for writers and artists to include state-of-the-art creative models to assist, complement and enhance their creative work. Apart from having a pipeline for different SOTA models, the project will create a marketplace for fine-tuning models on top of SOTA models and prompts.
 
 ## Eventual App Design 
-![alt text](app.jpg)
+![alt text](media/app.jpg)
 
 ## Sub-project description
 ### Front-end
-- POC design using Stramlit [x]
-- Authentication [ ]
-- Payment gatway [ ]
-- App design using modern front-end framework [ ]
-- integration with a database [ ]
+- [x] POC design using Stramlit
+- [ ] Authentication 
+- [ ] Payment gatway
+- [ ] App design using modern front-end framework
+- [ ] integration with a database
 
 ### AI/ML Pipeline
-- FastAPI for API [X]
-- Huggingface and PyTorch integration [X]
-- Generate images [X]
-- Introduce new concepts using textual inversion [X]
-- Introduce new concepts using textual inversion and prior preservation [ ]
-- ImageToImage pipeline [ ]
-- Image Inpainting [ ]
+- [x] FastAPI for API
+- [x] Huggingface and PyTorch integration
+- [x] Generate images
+- [ ] Introduce new concepts using textual inversion
+- [ ] Introduce new concepts using textual inversion and prior preservation
+- [ ] ImageToImage pipeline
+- [ ] Image Inpainting
 
 ### Dev-ops
-![alt text](devops.jpg)
+![alt text](mdeia/devops.jpg)
 
-- basic deployment architecture
-- General storage for all users
-    - Includes all base SOTA models
-- Personalized storage that contains fine-tuned model/images  
+- [ ] Basic deployment architecture
+- [ ] General storage for all users
+- [ ] Includes all base SOTA models
+- [ ] Personalized storage that contains fine-tuned model/images  
 
 ## How to deploy the current prototype
 ### Requirments
