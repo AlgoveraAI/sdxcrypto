@@ -27,7 +27,7 @@ In this project, we would like to explore creating a workflow for writers and ar
 - [ ] Image Inpainting
 
 ### Dev-ops
-![alt text](mdeia/devops.jpg)
+![alt text](media/devops.jpg)
 
 - [ ] Basic deployment architecture
 - [ ] General storage for all users
