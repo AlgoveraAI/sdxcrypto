@@ -70,10 +70,8 @@ As part of this project, we are collating different tools the community use. Ple
 - AWS
 
 **Authentication Tool**
-- 
 
-**Payment Gateway**
-- 
+**Payment Gateway** 
 
 ## How to join the project?
 
