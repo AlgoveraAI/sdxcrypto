@@ -9,7 +9,7 @@ In this project, we would like to explore creating a workflow for writers and ar
 ## Eventual App Design 
 ![alt text](media/app.jpg)
 
-## Sub-project description
+## Sub-project Status
 ### Front-end
 - [x] POC design using Stramlit
 - [ ] Authentication 
@@ -44,3 +44,29 @@ In this project, we would like to explore creating a workflow for writers and ar
 1. `git clone` this repo
 2. `cd` into the project folder
 3. `docker-compose up --build` to launch the project
+
+## Tools Survey
+As part of this project, we are collating different tools the community use. Please feel free to add to this list.
+
+**Front-End Framework**
+- React
+**API**
+- FastAPI
+**ML Framework**
+- PyTorch
+- Huggingface
+**DevOps**
+- Kubernettes
+**Database**
+- PostgreSQL
+**Cloud Provider**
+- Vast.ai
+- Banana.dev
+- AWS
+**Authentication Tool**
+- 
+**Payment Gateway**
+- 
+
+## How to join the project?
+
