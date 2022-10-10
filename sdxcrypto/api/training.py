@@ -43,7 +43,7 @@ class Training:
         self.cwd = os.getcwd() 
         self.tracker = BaseModels()
 
-    def get_params(self, params):
+    def set_params(self, params):
         
         #Arguments
         pretrained_model_name_or_path = params['base_model']
@@ -112,38 +112,51 @@ class Training:
         )
         return text_encoder, vae, unet, tokenizer
 
-    def prior_preservation(self):
+    def prior_preservation(self, args):
+        args = vars(args)
+        class_data_root = args['class_data_dir']
+        pretrained_model_name_or_path = args['pretrained_model_name_or_path']
+        class_prompt = args['class_prompt']
+        num_class_images = args['num_class_images']
+
         #generate class images
-        if(prior_preservation):
-            class_images_dir = Path(class_data_root)
-            if not class_images_dir.exists():
-                class_images_dir.mkdir(parents=True)
-            cur_class_images = len(list(class_images_dir.iterdir()))
+        class_images_dir = Path(class_data_root)
+        
+        if not class_images_dir.exists():
+            class_images_dir.mkdir(parents=True)
+        
+        cur_class_images = len(list(class_images_dir.iterdir()))
 
-            if cur_class_images < num_class_images:
-                pipeline = StableDiffusionPipeline.from_pretrained(
-                    pretrained_model_name_or_path, use_auth_token=True, revision="fp16", torch_dtype=torch.float16
-                ).to("cuda")
-                pipeline.enable_attention_slicing()
-                pipeline.set_progress_bar_config(disable=True)
+        if cur_class_images < num_class_images:
+            pipeline = StableDiffusionPipeline.from_pretrained(
+                pretrained_model_name_or_path, 
+                use_auth_token=self.access_token, 
+                revision="fp16", 
+                torch_dtype=torch.float16
+            ).to("cuda")
+            
+            pipeline.enable_attention_slicing()
+            pipeline.set_progress_bar_config(disable=True)
 
-                num_new_images = num_class_images - cur_class_images
-                print(f"Number of class images to sample: {num_new_images}.")
+            num_new_images = num_class_images - cur_class_images
+            
+            print(f"Number of class images to sample: {num_new_images}.")
 
-                sample_dataset = PromptDataset(class_prompt, num_new_images)
-                sample_dataloader = torch.utils.data.DataLoader(sample_dataset, batch_size=sample_batch_size)
+            sample_dataset = PromptDataset(class_prompt, num_new_images)
+            sample_dataloader = torch.utils.data.DataLoader(sample_dataset, batch_size=sample_batch_size)
 
-                for example in tqdm(sample_dataloader, desc="Generating class images"):
-                    with torch.autocast("cuda"):
-                        images = pipeline(example["prompt"]).images
+            for example in tqdm(sample_dataloader, desc="Generating class images"):
+                with torch.autocast("cuda"):
+                    images = pipeline(example["prompt"]).images
 
-                    for i, image in enumerate(images):
-                        image.save(class_images_dir / f"{example['index'][i] + cur_class_images}.jpg")
-                pipeline = None
-                gc.collect()
-                del pipeline
-                with torch.no_grad():
-                    torch.cuda.empty_cache()
+                for i, image in enumerate(images):
+                    image.save(class_images_dir / f"{example['index'][i] + cur_class_images}.jpg")
+
+            pipeline = None
+            gc.collect()
+            del pipeline
+            with torch.no_grad():
+                torch.cuda.empty_cache()
 
     def record_model(self, model_dir):
         data =pd.read_csv(f"{self.cwd}/storage/data.csv")
@@ -156,7 +169,13 @@ class Training:
         with torch.no_grad():
             torch.cuda.empty_cache()
         
-        args = self.get_params(params)
+        #get and set all parameters
+        args = self.set_params(params)
+
+        #if prior preservation is True, make class images
+        if vars(args)['with_prior_preservation']:
+            self.prior_preservation(args)
+
         text_encoder, vae, unet, tokenizer = self.load_pipe(vars(args)["pretrained_model_name_or_path"])
         accelerate.notebook_launcher(training_function, args=(args, text_encoder, vae, unet, tokenizer), num_processes=1)
         

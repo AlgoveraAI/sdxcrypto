@@ -77,7 +77,7 @@ def app():
             "concept_name": os.getenv("CONCEPT_NAME"),
             "ins_prompt": os.getenv("INS_PROMPT"),
             "resolution": int(os.getenv("RESOLUTION")),
-            "prior": True if os.getenv("prior") == "Yes" else False,
+            "prior": True if os.getenv("PRIOR") == "Yes" else False,
             "prior_prompt": os.getenv("PRIOR_PROMPT"),
         }
 
@@ -90,6 +90,6 @@ def app():
         
         toadd = [res['model_type'], res['model_name'], res['model_dir']]
         tracker.add_data(toadd)
-        tracker.del_data('b')
+        # tracker.del_data('b')
 
     st.button(label="Train", on_click=run_training)

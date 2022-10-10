@@ -1,8 +1,8 @@
 fastapi
 uvicorn
 streamlit
-diffusers
-accelerate
+diffusers==0.4.0
+accelerate==0.12.0
 torchvision
 tensorboard 
 transformers 
