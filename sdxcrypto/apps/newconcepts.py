@@ -33,6 +33,7 @@ def app():
     st.caption("`instance_prompt` is a prompt that should contain a good description of what your object or style is, together with the initializer word `sks`.")
  
     resolution = st.slider(label="Resoultion to be trained", min_value=128, max_value=512, step=128)
+    train_steps = st.slider(label="Training Steps", min_value=50, max_value=1000, step=50, value=400)
  
     st.markdown('''---''')
     prior = st.radio(label="Train Priors", options=["Yes", "No"], index=1)
@@ -66,6 +67,7 @@ def app():
         os.environ["RESOLUTION"] = str(resolution)
         os.environ["PRIOR"] = prior
         os.environ["PRIOR_PROMPT"] = prior_prompt
+        os.environ["TRAIN_STEPS"] = train_steps
 
     def run_training():
         url = "http://fastapi:5000/train"
@@ -79,6 +81,7 @@ def app():
             "resolution": int(os.getenv("RESOLUTION")),
             "prior": True if os.getenv("PRIOR") == "Yes" else False,
             "prior_prompt": os.getenv("PRIOR_PROMPT"),
+            "train_steps": os.getenv("TRAIN_STEPS")
         }
 
         data = {'data': json.dumps(parameters)}

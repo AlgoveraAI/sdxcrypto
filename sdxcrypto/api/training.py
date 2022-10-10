@@ -54,6 +54,7 @@ class Training:
         prior_preservation_class_prompt = params['prior_prompt']
         instance_data_dir = f"{self.cwd}/storage/{self.concept_name}/input_images"
         output_dir = f"{self.cwd}/storage/{self.concept_name}/output" 
+        train_steps = params["train_steps"]
 
         #Advanced settings for prior preservation (optional)
         num_class_images = 12 
@@ -69,7 +70,7 @@ class Training:
                 instance_data_dir=instance_data_dir,
                 instance_prompt=ins_prompt,
                 learning_rate=5e-06,
-                max_train_steps=400,
+                max_train_steps=train_steps,
                 train_batch_size=1,
                 gradient_accumulation_steps=2,
                 max_grad_norm=1.0,
@@ -118,7 +119,7 @@ class Training:
         pretrained_model_name_or_path = args['pretrained_model_name_or_path']
         class_prompt = args['class_prompt']
         num_class_images = args['num_class_images']
-
+        sample_batch_size = args['sample_batch_size']
         #generate class images
         class_images_dir = Path(class_data_root)
         
@@ -146,7 +147,7 @@ class Training:
             sample_dataloader = torch.utils.data.DataLoader(sample_dataset, batch_size=sample_batch_size)
 
             for example in tqdm(sample_dataloader, desc="Generating class images"):
-                with torch.autocast("cuda"):
+                with torch.cuda.amp.autocast():
                     images = pipeline(example["prompt"]).images
 
                 for i, image in enumerate(images):

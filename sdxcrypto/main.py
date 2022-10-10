@@ -5,7 +5,7 @@ import shutil
 import json
 from pathlib import Path
 from io import StringIO, BytesIO
-from typing import Union, List
+from typing import Union, List, Optional
 from pydantic import BaseModel
 from fastapi import FastAPI, File, UploadFile, Form, status
 from fastapi.responses import StreamingResponse, Response 
@@ -24,6 +24,16 @@ class GenerateRequest(BaseModel):
     guidance_scale:float = 7.5
     seed: int = 69
 
+    @classmethod
+    def __get_validators__(cls):
+        yield cls.validate_to_json
+
+    @classmethod
+    def validate_to_json(cls, value):
+        if isinstance(value, str):
+            return cls(**json.loads(value))
+        return value
+
 #requestbody for train
 class TrainRequest(BaseModel):
     base_model: str
@@ -32,6 +42,7 @@ class TrainRequest(BaseModel):
     resolution: int
     prior: bool
     prior_prompt: str
+    train_steps:int = 400
 
     @classmethod
     def __get_validators__(cls):
@@ -63,9 +74,28 @@ def homepage():
 
 #endpoint for generating images
 @app.post("/generate")
-def generate(params:GenerateRequest):
+def generate(data: GenerateRequest = Form(...),
+             files: Union[UploadFile, None] = None):
     
-    images = inf.run_inference(params=dict(params))
+    params=dict(data)
+
+    if files: params['img2img'] = True
+    else: params['img2img'] = False
+   
+    cwd = os.getcwd()
+    base_path = f"{cwd}/storage/init_images/"
+    Path(base_path).mkdir(parents=True, exist_ok=True)
+    
+    if files:
+        destination_file_path = base_path+files.filename #output file path
+        with open(destination_file_path, 'wb') as out_file:
+            shutil.copyfileobj(files.file, out_file)
+
+    images = inf.run_inference(params)
+
+    files = glob.glob(f"{base_path}/*")
+    for f in files:
+        os.remove(f)
 
     cwd = os.getcwd()
     zip_subdir  = f"{cwd}/storage/output_images"
@@ -80,14 +110,15 @@ def generate(params:GenerateRequest):
             temp_zip.write(fpath, zip_path)
     
     files = glob.glob(f"{zip_subdir}/*")
+
     for f in files:
         os.remove(f)
 
     return StreamingResponse(
         iter([zip_io.getvalue()]), 
         media_type="application/x-zip-compressed", 
-        headers = { "Content-Disposition": f"attachment; filename=images.zip"}
-    )
+        headers = { "Content-Disposition": f"attachment; filename=images.zip"})
+    
 
 #endpoint for textual inversion
 @app.post("/train", response_model=TrainResponse)
@@ -100,10 +131,11 @@ def train(data: TrainRequest = Form(...),
     base_path = f"{cwd}/storage/{params['concept_name']}/input_images/"
     Path(base_path).mkdir(parents=True, exist_ok=True)
     
-    for file in files:
-        destination_file_path = base_path+file.filename #output file path
-        with open(destination_file_path, 'wb') as out_file:
-            shutil.copyfileobj(file.file, out_file)
+    if files:
+        for file in files:
+            destination_file_path = base_path+file.filename #output file path
+            with open(destination_file_path, 'wb') as out_file:
+                shutil.copyfileobj(file.file, out_file)
     
     tosave = trn.run_training(params)
     return {'model_type':tosave[0], 'model_name':tosave[1], 'model_dir':tosave[2]}

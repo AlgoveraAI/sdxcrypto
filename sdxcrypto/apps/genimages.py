@@ -1,24 +1,14 @@
 import os
 import io
 import glob
+import json
 import zipfile
 import requests 
 import shutil
 import streamlit as st
 from PIL import Image
 from sdxcrypto.api.tracker import BaseModels
-
-
-def build_folders():
-    cwd = os.getcwd()
-    if not os.path.exists(f"{cwd}/storage"):
-        os.mkdir(f"{cwd}/storage")
-    
-    if not os.path.exists(f"{cwd}/storage/current_images"):
-        os.mkdir(f"{cwd}/storage/current_images")
-
-    if not os.path.exists(f"{cwd}/storage/all_images"):
-        os.mkdir(f"{cwd}/storage/all_images")
+from sdxcrypto.apps.utils import build_folders, resize_saveimg, set_parameters, rmi_folder, unzip_save_response
     
 def app():
     st.write("""
@@ -27,10 +17,7 @@ def app():
     bm = BaseModels()
     cwd = os.getcwd()
     
-    build_folders()
-    
-    path_ci = f"{cwd}/storage/current_images"
-    path_ai = f"{cwd}/storage/all_images"
+    path_stg, path_ci, path_ai, path_ii = build_folders()
 
     base_model = st.selectbox(
         'Choose your model',
@@ -48,81 +35,82 @@ def app():
         label="Height of the generated image",
         min_value=128,
         max_value=512, 
-        step=128
+        step=128,
+        value=512
     )
 
     width = st.slider(
         label="Width of the generated image",
         min_value=128,
         max_value=512, 
-        step=128
+        step=128,
+        value=512
     )
     
     inf_steps = st.slider(
         label="Number of inference steps",
         min_value=10,
         max_value=100, 
-        step=10
+        step=10,
+        value=50
     )
     
     guidance_scale = st.slider(
         label="Guidance Scale",
         min_value=1,
         max_value=100, 
-        step=1
+        step=1,
+        value=7
     )
 
-    seed = st.number_input(label="seed", step=1)
+    seed = st.number_input(label="Seed", step=1, value=42)
 
-    def set_parameters():
-        os.environ["PROMPT"] = prompt
-        os.environ["BASE_MODEL"] = base_model
-        os.environ["NUM_SAMPLES"] = str(num_samples)
-        os.environ["HEIGHT"] = str(height)
-        os.environ["WIDTH"] = str(width)
-        os.environ["INF_STEPS"] = str(inf_steps)
-        os.environ["GUIDANCE_SCALE"] = str(guidance_scale)
-        os.environ["SEED"] = str(seed)
+    init_image = st.file_uploader("Upload initial image",
+                                    type=['jpg','jpeg','png'],
+                                    help="Upload an initial image - jpg, jpeg, png", 
+                                    accept_multiple_files=False)
 
-        print(prompt, base_model, num_samples, height, width, inf_steps, guidance_scale, seed)
+    if init_image:
+        resize_saveimg(init_image, 512)
 
     def gen_image():
         url = "http://fastapi:5000/generate"
         
-        set_parameters()
+        #set up parameters
+        parameters =  set_parameters(prompt,
+                                    base_model,
+                                    num_samples,
+                                    height,
+                                    width,
+                                    inf_steps,
+                                    guidance_scale,
+                                    seed)
 
-        for fn in glob.glob(f"{path_ci}/*jpg"):
-            os.remove(fn)
+        #remove images from the current_images folder
+        rmi_folder(path_ci)
         
-        parameters = {
-            "base_model":os.getenv("BASE_MODEL"),
-            "prompt":os.getenv("PROMPT"),
-            "num_samples":int(os.getenv("NUM_SAMPLES")),
-            "inf_steps": int(os.getenv("INF_STEPS")),
-            "guidance_scale":float(os.getenv("GUIDANCE_SCALE")),
-            "height":int(os.getenv("HEIGHT")),
-            "width":int(os.getenv("WIDTH")),
-            "seed":int(os.getenv("SEED"))
-        }
+        #set up request body
+        if init_image:
+            file = {'files': open(f'{path_ii}/{init_image.name}', 'rb')}
+        else: 
+            file = None
+        
+        data = {'data': json.dumps(parameters)}
+        
+        #send request
+        response = requests.post(url=url, 
+                                 data=data, 
+                                 files=file)
+        
+        #remove init_images
+        rmi_folder(path_ii)
 
-        response = requests.post(url=url, json=parameters)
-        
-        with open(f"{path_ci}/images.zip", "wb") as f:
-            f.write(response.content)
-
-        with zipfile.ZipFile(f"{path_ci}/images.zip","r") as zip_ref:
-            zip_ref.extractall(f"{path_ci}")
-        
-        os.remove(f"{path_ci}/images.zip")
-        
-        for fn in glob.glob(f"{path_ci}/app/storage/output_images/*"):
-            shutil.copy(fn, path_ai)
-            shutil.copy(fn, path_ci)
-        shutil.rmtree(f'{path_ci}/app')
+        #save zipped response
+        unzip_save_response(response)
     
     st.button(label="Diffuse My Images", on_click=gen_image)
 
-    for fn in glob.glob(f"{path_ci}/*.jpg"):
+    for fn in glob.glob(f"{path_ci}/*jpg"):
         st.image(Image.open(fn))
 
 

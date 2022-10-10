@@ -1,12 +1,12 @@
-
 import os
 import io
+import glob
 import numpy as np
 import uuid
 import pandas as pd
 from PIL import Image
 import torch
-from diffusers import StableDiffusionPipeline, LMSDiscreteScheduler
+from diffusers import StableDiffusionPipeline, StableDiffusionImg2ImgPipeline, LMSDiscreteScheduler
 
 class Inference:
     def __init__(self):
@@ -26,8 +26,17 @@ class Inference:
         inf_steps = params["inf_steps"]
         guidance_scale = params["guidance_scale"]
         seed = params["seed"]
-        pipe = self.get_pipe(base_model)
+        img2img = params["img2img"]
+
+        pipe = self.get_pipe(base_model, img2img=img2img)
         
+        if img2img:
+            init_image = Image.open(glob.glob(f"{self.cwd}/storage/init_images/*")[0])
+            print(init_image)
+        
+        else:
+            init_image = None
+
         images = self.inference(pipe, 
                                 prompt, 
                                 num_samples, 
@@ -35,50 +44,86 @@ class Inference:
                                 width, 
                                 inf_steps, 
                                 guidance_scale, 
-                                seed)
+                                seed, 
+                                img2img, 
+                                init_image)
         return images
 
-    def get_pipe(self, model_name):
+    def get_pipe(self, model_name, img2img):
         # check if there is already the pipe in pipes
         # if yes and the selected model is same return
         # if model different - set up and add to pipes and return pipe
-        if model_name in self.pipes:
+        if f"{model_name}_{img2img}" in self.pipes:
             print("model_name in pipe")
-            return self.pipes[model_name]
+            print(f"{model_name}_{img2img}")
+
+            return self.pipes[f"{model_name}_{img2img}"]
 
         else:
             model_type = self.data[self.data["model_name"] == model_name]["model_type"].values[0]
             if model_type == "base_model":
-                # scheduler = LMSDiscreteScheduler(beta_start=0.00085, beta_end=0.012, beta_schedule="scaled_linear")
-                pipe = StableDiffusionPipeline.from_pretrained(
-                                                               model_name, 
-                                                            #    scheduler=scheduler, 
-                                                               use_auth_token=self.hf_token,
-                                                               revision="fp16", 
-                                                               torch_dtype=torch.float16).to("cuda")
+                if not img2img:
+                    scheduler = LMSDiscreteScheduler(beta_start=0.00085, beta_end=0.012, beta_schedule="scaled_linear")
+                    pipe = StableDiffusionPipeline.from_pretrained(
+                                                                model_name, 
+                                                                scheduler=scheduler, 
+                                                                use_auth_token=self.hf_token,
+                                                                revision="fp16", 
+                                                                torch_dtype=torch.float16).to("cuda")
+
+                else:
+                    scheduler = LMSDiscreteScheduler(beta_start=0.00085, beta_end=0.012, beta_schedule="scaled_linear")
+                    pipe = StableDiffusionImg2ImgPipeline.from_pretrained(
+                                                                model_name, 
+                                                                scheduler=scheduler, 
+                                                                use_auth_token=self.hf_token,
+                                                                revision="fp16", 
+                                                                torch_dtype=torch.float16).to("cuda")
 
             else:
                 model_dir = self.data[self.data["model_name"] == model_name]["model_dir"].values[0]
-                pipe = StableDiffusionPipeline.from_pretrained(
-                                                                model_dir,
-                                                                revision="fp16", 
-                                                                torch_dtype=torch.float16,
-                                                            ).to("cuda")
-            self.pipes[model_name] = pipe          
+
+                if not img2img:
+                    pipe = StableDiffusionPipeline.from_pretrained(
+                                                                    model_dir,
+                                                                    revision="fp16", 
+                                                                    torch_dtype=torch.float16,
+                                                                ).to("cuda")
+                else:
+                    pipe = StableDiffusionImg2ImgPipeline.from_pretrained(
+                                                                    model_dir,
+                                                                    revision="fp16", 
+                                                                    torch_dtype=torch.float16,
+                                                                ).to("cuda")
+            
+            self.pipes[f"{model_name}_{img2img}"] = pipe          
             return pipe
 
-    def inference(self, pipe, prompt, num_samples, height=256, width=256, inf_steps=50, guidance_scale=7.5, seed=69):
+    def inference(self, pipe, prompt, num_samples, height=256, width=256, inf_steps=50, guidance_scale=7.5, seed=69, img2img=False, init_image=None):
         all_images = [] 
-        with torch.cuda.amp.autocast():
-            images = pipe([prompt] * num_samples, 
-                          num_inference_steps=inf_steps, 
-                          guidance_scale=guidance_scale,
-                          height=height,
-                          width=width,
-                          seed=seed).images
+        if not img2img:
+            print("not img2img")
+            with torch.cuda.amp.autocast():
+                images = pipe([prompt] * num_samples, 
+                            num_inference_steps=inf_steps, 
+                            guidance_scale=guidance_scale,
+                            height=height,
+                            width=width,
+                            seed=seed).images
 
-            all_images.extend(images)
+                all_images.extend(images)
+        
+        else:
+            print("img2img")
+            with torch.cuda.amp.autocast():
+                images = pipe([prompt] * num_samples, 
+                            init_image=init_image,
+                            strength=0.6,
+                            num_inference_steps=inf_steps, 
+                            guidance_scale=guidance_scale,
+                            seed=seed).images
 
+                all_images.extend(images)
         self.mk_dir()
         [img.save(f"{self.image_output_dir }/{uuid.uuid4().hex}.jpg") for img in all_images]
         
