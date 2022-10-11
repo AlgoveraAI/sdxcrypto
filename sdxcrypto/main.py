@@ -23,6 +23,7 @@ class GenerateRequest(BaseModel):
     inf_steps:int = 50
     guidance_scale:float = 7.5
     seed: int = 69
+    strength: float = 0.6
 
     @classmethod
     def __get_validators__(cls):

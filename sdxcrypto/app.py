@@ -4,6 +4,8 @@ from sdxcrypto.apps import home, genimages, newconcepts # import your app module
 
 app = MultiApp()
 
+st.set_page_config(page_title="Generate Image", layout='wide')
+
 st.markdown("""
 # Stable Diffusion x Crypto
 Your creative assistant. Take your writings to the next level.

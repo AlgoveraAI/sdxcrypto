@@ -27,12 +27,12 @@ class Inference:
         guidance_scale = params["guidance_scale"]
         seed = params["seed"]
         img2img = params["img2img"]
+        strength = params["strength"]
 
         pipe = self.get_pipe(base_model, img2img=img2img)
         
         if img2img:
             init_image = Image.open(glob.glob(f"{self.cwd}/storage/init_images/*")[0])
-            print(init_image)
         
         else:
             init_image = None
@@ -46,6 +46,7 @@ class Inference:
                                 guidance_scale, 
                                 seed, 
                                 img2img, 
+                                strength,
                                 init_image)
         return images
 
@@ -99,10 +100,21 @@ class Inference:
             self.pipes[f"{model_name}_{img2img}"] = pipe          
             return pipe
 
-    def inference(self, pipe, prompt, num_samples, height=256, width=256, inf_steps=50, guidance_scale=7.5, seed=69, img2img=False, init_image=None):
+    def inference(self, 
+        pipe, 
+        prompt, 
+        num_samples, 
+        height=256, 
+        width=256, 
+        inf_steps=50, 
+        guidance_scale=7.5, 
+        seed=69, 
+        img2img=False, 
+        strength=0.6,
+        init_image=None):
         all_images = [] 
         if not img2img:
-            print("not img2img")
+            print("txt2img")
             with torch.cuda.amp.autocast():
                 images = pipe([prompt] * num_samples, 
                             num_inference_steps=inf_steps, 
@@ -118,7 +130,7 @@ class Inference:
             with torch.cuda.amp.autocast():
                 images = pipe([prompt] * num_samples, 
                             init_image=init_image,
-                            strength=0.6,
+                            strength=strength,
                             num_inference_steps=inf_steps, 
                             guidance_scale=guidance_scale,
                             seed=seed).images
