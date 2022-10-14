@@ -11,7 +11,7 @@ In this project, we would like to explore creating a workflow for writers and ar
 
 ## Sub-project Status
 ### Front-end
-- [x] POC design using Stramlit
+- [x] POC design using Streamlit
 - [ ] Authentication 
 - [ ] Payment gatway
 - [ ] App design using modern front-end framework
