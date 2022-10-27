@@ -37,6 +37,6 @@ class Worker():
 
     def change_job_status(self, changeto):
         with Session(engine) as session:
-            job_query = session.query(models.Jobs).filter(models.Jobs.job_uuid == self.job_uuid).first()
+            job_query = session.query(models.Job).filter(models.Job.job_uuid == self.job_uuid).first()
             job_query.job_status = changeto
             session.commit()

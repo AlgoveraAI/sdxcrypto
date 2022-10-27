@@ -29,7 +29,10 @@ class User(Base):
         server_default=text('now()')
         )
 
-class Jobs(Base):
+    job = relationship("Job", back_populates="owner_job")
+    asset = relationship("Asset", back_populates="owner_asset")
+
+class Job(Base):
     __tablename__ = "jobs"
     id = Column(
         Integer, 
@@ -81,6 +84,9 @@ class Jobs(Base):
         String
     )
 
+    owner_job = relationship("User", back_populates="job")
+
+
 class Asset(Base):
     __tablename__ = "assets"
 
@@ -90,10 +96,11 @@ class Asset(Base):
         nullable=False)
     
     owner_id = Column(
-        String, 
+        Integer, 
+        ForeignKey("users.id", ondelete="CASCADE"), 
         nullable=False
         )
-    
+
     asset_uuid = Column(
         String, 
         nullable=False
@@ -114,8 +121,11 @@ class Asset(Base):
         String,
         nullable=False
     )
+    
+    owner_asset = relationship("User", back_populates="asset")
 
-class BaseModels(Base):
+
+class BaseModel(Base):
     __tablename__ = "basemodels"
     id = Column(
         Integer, 

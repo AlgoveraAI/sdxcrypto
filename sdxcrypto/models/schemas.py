@@ -50,7 +50,7 @@ class JobCreateIn(BaseModel):
         return value
 
 class JobCreateOut(BaseModel):
-    jobID: str
+    job_id: str
     
     @classmethod
     def __get_validators__(cls):
@@ -63,7 +63,7 @@ class JobCreateOut(BaseModel):
         return value
 
 class JobStatusIn(BaseModel):
-    jobID: str
+    job_id: str
     
     @classmethod
     def __get_validators__(cls):
@@ -76,8 +76,8 @@ class JobStatusIn(BaseModel):
         return value
 
 class JobStatusOut(BaseModel):
-    jobID: str
-    jobStatus: str
+    job_id: str
+    job_status: str
     
     @classmethod
     def __get_validators__(cls):
@@ -92,5 +92,12 @@ class JobStatusOut(BaseModel):
 class BaseModelsOut(BaseModel):
     base_models: list[str] = []
 
+class AssetsIn(BaseModel):
+    job_id: str
+
+# class AssetsIDIn(BaseModel):
+#     asset_id: str
+
+
 class AssetsOut(BaseModel):
-    assets: list[bytes] = []
+    assets: list[str] = []
