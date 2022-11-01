@@ -35,18 +35,18 @@ router = APIRouter(
 def get_asset(job_id:schemas.AssetsIn, 
               current_user: int = Depends(oauth2.get_current_user), 
               db: Session = Depends(get_db)):
-
+    logger.info(f"owner - {current_user.id}")
     #if all jobs
     job_id = job_id.job_id
     if job_id == 'all':
         jobids = db.query(models.Job).filter(models.Job.owner_id == current_user.id)
         jobids = [id_.job_uuid for id_ in jobids]
-
+        logger.info(f"{jobids}")
         all_assets = []
         for job in jobids:
-            for asset in db.query(models.Asset).filter(models.Job.job_uuid == job):
+            for asset in db.query(models.Asset).filter(models.Asset.job_uuid == job):
                 all_assets.append(asset.filename)
-        
+        logger.info(f"{all_assets}")
         return  zipfiles(all_assets)
     
     else:
@@ -72,7 +72,7 @@ def get_asset(job_id:schemas.AssetsIn,
 def get_asset(current_user: int = Depends(oauth2.get_current_user), 
               db: Session = Depends(get_db)):
 
-    assets =  db.query(models.Asset).filter(models.Job.owner_id == current_user.id).all()
+    assets =  db.query(models.Asset).filter(models.Asset.owner_id == current_user.id).all()
 
     if not assets:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"No asset found")

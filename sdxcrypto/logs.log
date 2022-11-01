@@ -324,3 +324,143 @@ AttributeError: module 'models.models' has no attribute 'Jobs'
 2022-10-27 11:27:24,688 - scheduler.inference - INFO - added asset - d0bdd51b23434df9ad13ba16c02473a7
 2022-10-27 11:27:24,691 - scheduler.worker - INFO - Setting worker status toFalse
 2022-10-27 11:27:25,851 - routers.assets - INFO - [<models.models.Asset object at 0x7f050c74e0b0>]
+2022-10-27 15:04:16,259 - scheduler.worker - INFO - Setting worker status toTrue
+2022-10-27 15:04:16,260 - scheduler.worker - INFO - Starting job for Job ID: ad8514c31e6946e4b12c8078b6d68e8c
+2022-10-27 15:04:16,263 - scheduler.inference - INFO - Starting job with prompt: what a wonderful world. river view
+2022-10-27 15:04:21,496 - scheduler.inference - INFO - added asset - 51c17ee9f90d484faf188b676edd594c
+2022-10-27 15:04:21,500 - scheduler.worker - INFO - Setting worker status toFalse
+2022-10-27 15:04:37,688 - routers.assets - INFO - [<models.models.Asset object at 0x7f050b0c47f0>]
+2022-10-27 15:06:39,104 - scheduler.worker - INFO - Setting worker status toTrue
+2022-10-27 15:06:39,104 - scheduler.worker - INFO - Starting job for Job ID: 1ccd5e904eac489fa87f71878b26502f
+2022-10-27 15:06:39,107 - scheduler.inference - INFO - Starting job with prompt: motorcycle
+2022-10-27 15:06:44,337 - scheduler.inference - INFO - added asset - 40db89b8823a4cc8bec7463198692861
+2022-10-27 15:06:44,341 - scheduler.worker - INFO - Setting worker status toFalse
+2022-10-27 15:06:44,342 - scheduler.worker - INFO - Setting worker status toTrue
+2022-10-27 15:06:44,342 - scheduler.worker - INFO - Starting job for Job ID: b4205965768048e8b6f6ae6f32ba724d
+2022-10-27 15:06:44,346 - scheduler.inference - INFO - Starting job with prompt: cricket
+2022-10-27 15:06:49,561 - scheduler.inference - INFO - added asset - e36818e0b5944408ab9804964f6bc836
+2022-10-27 15:06:49,564 - scheduler.worker - INFO - Setting worker status toFalse
+2022-10-27 15:06:49,566 - scheduler.worker - INFO - Setting worker status toTrue
+2022-10-27 15:06:49,566 - scheduler.worker - INFO - Starting job for Job ID: 99fde1f6dad7488e8981ee26e8e18131
+2022-10-27 15:06:49,569 - scheduler.inference - INFO - Starting job with prompt: soccer
+2022-10-27 15:06:54,804 - scheduler.inference - INFO - added asset - 56f9b4d0d6ef4aa48bba12b2b644cdc7
+2022-10-27 15:06:54,807 - scheduler.worker - INFO - Setting worker status toFalse
+2022-10-28 03:19:35,680 - scheduler_interface - INFO - Starting scheduler...
+2022-10-28 03:19:39,337 - scheduler.inference - INFO - Base storage set as - /home/ec2-user/sdxcrypto/sdxcrypto
+2022-10-28 03:19:39,338 - scheduler.scheduler - INFO - Worker extended and scheduler started
+2022-10-28 03:20:23,496 - scheduler_interface - INFO - Starting scheduler...
+2022-10-28 03:20:27,160 - scheduler.inference - INFO - Base storage set as - /home/ec2-user/sdxcrypto/sdxcrypto
+2022-10-28 03:20:27,160 - scheduler.scheduler - INFO - Worker extended and scheduler started
+2022-10-28 03:36:00,539 - scheduler.worker - INFO - Setting worker status toTrue
+2022-10-28 03:36:00,539 - scheduler.worker - INFO - Starting job for Job ID: d8a2ff8d0d2f419bbddc68c44514bb8d
+2022-10-28 03:36:49,884 - scheduler.inference - INFO - Starting job with prompt: Fullbody headshot key visual character design of an adorable crest green gecko chibi with regal attire, cel shading, flat colors, pastels, anime, 3d render, blender, hypersonic, 8k, stunning quality, octane render, trending on artstation, sharp focus, studio photo, intricate details, highly detailed, moody lighting, 8 k resolution, octane render, trending on artstation, by h. r. giger, haze, ultra-detailed, film photography, light leaks, Larry Bud Melman, trending on artstation, sharp focus, studio photo, intricate details, highly detailed
+2022-10-28 03:36:55,974 - scheduler.inference - INFO - added asset - 824c02a0ed4d44afbe27d1aa23128d91
+2022-10-28 03:36:55,977 - scheduler.worker - INFO - Setting worker status toFalse
+2022-10-28 03:37:18,435 - routers.assets - INFO - [<models.models.Asset object at 0x7fe7611f1f60>]
+2022-10-28 03:44:06,583 - scheduler_interface - INFO - Starting scheduler...
+2022-10-28 03:44:10,280 - scheduler.inference - INFO - Base storage set as - /home/ec2-user/sdxcrypto/sdxcrypto
+2022-10-28 03:44:10,280 - scheduler.scheduler - INFO - Worker extended and scheduler started
+2022-10-28 03:44:22,673 - routers.assets - INFO - owner - 3
+2022-10-28 03:44:22,676 - routers.assets - INFO - ['d8a2ff8d0d2f419bbddc68c44514bb8d']
+2022-10-28 03:45:41,861 - scheduler_interface - INFO - Starting scheduler...
+2022-10-28 03:45:45,594 - scheduler.inference - INFO - Base storage set as - /home/ec2-user/sdxcrypto/sdxcrypto
+2022-10-28 03:45:45,594 - scheduler.scheduler - INFO - Worker extended and scheduler started
+2022-10-28 03:45:54,664 - routers.assets - INFO - owner - 3
+2022-10-28 03:45:54,667 - routers.assets - INFO - ['d8a2ff8d0d2f419bbddc68c44514bb8d']
+2022-10-28 03:45:54,670 - routers.assets - INFO - ['/home/ec2-user/sdxcrypto/sdxcrypto/1/images/ee750ab0e8a34f599f71415a93cd7115.jpg', '/home/ec2-user/sdxcrypto/sdxcrypto/1/images/5b43ca30c1e6464cbb8e23387d62e059.jpg', '/home/ec2-user/sdxcrypto/sdxcrypto/1/images/c3b622ded3ec469fa807a503f2cbfa2c.jpg', '/home/ec2-user/sdxcrypto/sdxcrypto/1/images/bbae85bf90bf4558aca2703016e2f018.jpg', '/home/ec2-user/sdxcrypto/sdxcrypto/1/images/ea5649bdd999405e801d1170546c817b.jpg', '/home/ec2-user/sdxcrypto/sdxcrypto/1/images/672fcfbc18224f84a7b88dbe97961f95.jpg', '/home/ec2-user/sdxcrypto/sdxcrypto/1/images/e0c6655905274f379b7aad14615d32be.jpg', '/home/ec2-user/sdxcrypto/sdxcrypto/1/images/6fdeed29970547cea7765e9885c66ced.jpg', '/home/ec2-user/sdxcrypto/sdxcrypto/1/images/3e131006ce544cfa8d5bc7b05737627f.jpg', '/home/ec2-user/sdxcrypto/sdxcrypto/1/images/cb53cedd78044e97adbc740e2a35572e.jpg', '/home/ec2-user/sdxcrypto/sdxcrypto/1/images/b1fa683940254e7c97604c65e131e6d5.jpg', '/home/ec2-user/sdxcrypto/sdxcrypto/1/images/0da3f10141924dfaa9cbda9f95d0b549.jpg', '/home/ec2-user/sdxcrypto/sdxcrypto/1/images/57330457bd754da2895bfde69118f7fa.jpg', '/home/ec2-user/sdxcrypto/sdxcrypto/1/images/c019d6f1b0374f61b5704695fbf6feee.jpg', '/home/ec2-user/sdxcrypto/sdxcrypto/1/images/d0bdd51b23434df9ad13ba16c02473a7.jpg', '/home/ec2-user/sdxcrypto/sdxcrypto/1/images/51c17ee9f90d484faf188b676edd594c.jpg', '/home/ec2-user/sdxcrypto/sdxcrypto/1/images/40db89b8823a4cc8bec7463198692861.jpg', '/home/ec2-user/sdxcrypto/sdxcrypto/1/images/e36818e0b5944408ab9804964f6bc836.jpg', '/home/ec2-user/sdxcrypto/sdxcrypto/1/images/56f9b4d0d6ef4aa48bba12b2b644cdc7.jpg', '/home/ec2-user/sdxcrypto/sdxcrypto/3/images/824c02a0ed4d44afbe27d1aa23128d91.jpg']
+2022-10-28 03:46:59,361 - scheduler_interface - INFO - Starting scheduler...
+2022-10-28 03:47:03,006 - scheduler.inference - INFO - Base storage set as - /home/ec2-user/sdxcrypto/sdxcrypto
+2022-10-28 03:47:03,006 - scheduler.scheduler - INFO - Worker extended and scheduler started
+2022-10-28 03:47:07,247 - routers.assets - INFO - owner - 3
+2022-10-28 03:47:07,250 - routers.assets - INFO - ['d8a2ff8d0d2f419bbddc68c44514bb8d']
+2022-10-28 03:47:07,253 - routers.assets - INFO - ['/home/ec2-user/sdxcrypto/sdxcrypto/3/images/824c02a0ed4d44afbe27d1aa23128d91.jpg']
+2022-10-28 03:47:51,971 - scheduler_interface - INFO - Starting scheduler...
+2022-10-28 03:47:55,694 - scheduler.inference - INFO - Base storage set as - /home/ec2-user/sdxcrypto/sdxcrypto
+2022-10-28 03:47:55,694 - scheduler.scheduler - INFO - Worker extended and scheduler started
+2022-10-28 03:49:44,962 - scheduler.worker - INFO - Setting worker status toTrue
+2022-10-28 03:49:44,962 - scheduler.worker - INFO - Starting job for Job ID: 6abe7e67c7d6468d85dd3487c2ba9c67
+2022-10-28 03:50:15,852 - scheduler.inference - INFO - Starting job with prompt:  a retro fantasy painting portrait of beautiful pumpkin spirit floating on gingko leaves, large detailed eyes ((((style of frank frazetta:4 and hiroki mafuyu:4 and chuck close:2 fantasy art)))), intricate details, highly detailed, octane render
+2022-10-28 03:50:21,250 - scheduler.inference - INFO - added asset - 3e29768769434ac3b2c44de0ff84ec2e
+2022-10-28 03:50:21,254 - scheduler.worker - INFO - Setting worker status toFalse
+2022-10-28 03:50:21,256 - scheduler.worker - INFO - Setting worker status toTrue
+2022-10-28 03:50:21,256 - scheduler.worker - INFO - Starting job for Job ID: efbee86dc7924660b815eeeb17f21740
+2022-10-28 03:50:21,259 - scheduler.inference - INFO - Starting job with prompt: Siberian Husky, blue eyes, portrait, stroke brushes in clear blue, splatter, japanesse letters decoration, acrylic painting, trending on pixiv fanbox, palette knife and brush strokes, style of makoto shinkai jamie wyeth james gilleard edward hopper greg rutkowski studio ghibli genshin impact
+2022-10-28 03:50:26,440 - scheduler.inference - INFO - added asset - 29472a1df4d1420b841fb08f19eb6f64
+2022-10-28 03:50:26,443 - scheduler.worker - INFO - Setting worker status toFalse
+2022-10-28 03:50:26,445 - scheduler.worker - INFO - Setting worker status toTrue
+2022-10-28 03:50:26,445 - scheduler.worker - INFO - Starting job for Job ID: 35de5c9be1df4a929dcd41b9bbae8701
+2022-10-28 03:50:26,448 - scheduler.inference - INFO - Starting job with prompt: barack obama eating nasi lemak
+2022-10-28 03:50:31,625 - scheduler.inference - INFO - added asset - 19ebbcb190bf408a9fa4ab921a68d309
+2022-10-28 03:50:31,628 - scheduler.worker - INFO - Setting worker status toFalse
+2022-10-28 03:50:39,661 - routers.assets - INFO - owner - 3
+2022-10-28 03:50:39,664 - routers.assets - INFO - ['d8a2ff8d0d2f419bbddc68c44514bb8d', 'efbee86dc7924660b815eeeb17f21740', '6abe7e67c7d6468d85dd3487c2ba9c67', '35de5c9be1df4a929dcd41b9bbae8701']
+2022-10-28 03:50:39,668 - routers.assets - INFO - ['/home/ec2-user/sdxcrypto/sdxcrypto/3/images/824c02a0ed4d44afbe27d1aa23128d91.jpg', '/home/ec2-user/sdxcrypto/sdxcrypto/3/images/29472a1df4d1420b841fb08f19eb6f64.jpg', '/home/ec2-user/sdxcrypto/sdxcrypto/3/images/3e29768769434ac3b2c44de0ff84ec2e.jpg', '/home/ec2-user/sdxcrypto/sdxcrypto/3/images/19ebbcb190bf408a9fa4ab921a68d309.jpg']
+2022-10-28 03:53:01,127 - scheduler.worker - INFO - Setting worker status toTrue
+2022-10-28 03:53:01,127 - scheduler.worker - INFO - Starting job for Job ID: fa85ca16b7944768a8f01934efb1485b
+2022-10-28 03:53:01,131 - scheduler.inference - INFO - Starting job with prompt: barack obama eating nasi lemak
+2022-10-28 03:53:06,338 - scheduler.inference - INFO - added asset - df6c0a6a3479495e98589441fddfac49
+2022-10-28 03:53:06,342 - scheduler.worker - INFO - Setting worker status toFalse
+2022-10-28 03:53:07,165 - routers.assets - INFO - owner - 3
+2022-10-28 03:53:07,168 - routers.assets - INFO - [<models.models.Asset object at 0x7fe0912f0df0>]
+2022-10-28 03:53:30,738 - scheduler.worker - INFO - Setting worker status toTrue
+2022-10-28 03:53:30,738 - scheduler.worker - INFO - Starting job for Job ID: 0d96eeffba1e4edba9e33e506d912b15
+2022-10-28 03:53:30,741 - scheduler.inference - INFO - Starting job with prompt:  anime girl, unreal engine, greg rutkowski, loish, rhads, beeple, makoto shinkai and lois van baarle, ilya kuvshinov, rossdraws, tom bagshaw, alphonse mucha, global illumination, detailed and intricate environment
+2022-10-28 03:53:35,944 - scheduler.inference - INFO - added asset - 8bd91b19c32d4750a5850abdbd2ff773
+2022-10-28 03:53:35,948 - scheduler.worker - INFO - Setting worker status toFalse
+2022-10-28 03:53:36,902 - routers.assets - INFO - owner - 3
+2022-10-28 03:53:36,904 - routers.assets - INFO - [<models.models.Asset object at 0x7fe0912f2080>]
+2022-10-28 03:53:47,294 - scheduler.worker - INFO - Setting worker status toTrue
+2022-10-28 03:53:47,294 - scheduler.worker - INFO - Starting job for Job ID: c460fe6db56148d7b489e0a8c6359272
+2022-10-28 03:53:47,297 - scheduler.inference - INFO - Starting job with prompt:  anime girl, unreal engine, greg rutkowski, loish, rhads, beeple, makoto shinkai and lois van baarle, ilya kuvshinov, rossdraws, tom bagshaw, alphonse mucha, global illumination, detailed and intricate environment
+2022-10-28 03:53:52,482 - scheduler.inference - INFO - added asset - ce429d4dd83845908604c1ea4d378196
+2022-10-28 03:53:52,486 - scheduler.worker - INFO - Setting worker status toFalse
+2022-10-28 03:53:53,445 - routers.assets - INFO - owner - 3
+2022-10-28 03:53:53,448 - routers.assets - INFO - [<models.models.Asset object at 0x7fe0912f1f00>]
+2022-10-28 03:54:01,434 - scheduler.worker - INFO - Setting worker status toTrue
+2022-10-28 03:54:01,435 - scheduler.worker - INFO - Starting job for Job ID: 95b2ad1af660454c92644184acdc4eac
+2022-10-28 03:54:01,438 - scheduler.inference - INFO - Starting job with prompt:  anime girl, unreal engine, greg rutkowski, loish, rhads, beeple, makoto shinkai and lois van baarle, ilya kuvshinov, rossdraws, tom bagshaw, alphonse mucha, global illumination, detailed and intricate environment
+2022-10-28 03:54:06,644 - scheduler.inference - INFO - added asset - 28f69df38efa48bbaae94cf3c0c87218
+2022-10-28 03:54:06,648 - scheduler.worker - INFO - Setting worker status toFalse
+2022-10-28 03:54:08,238 - routers.assets - INFO - owner - 3
+2022-10-28 03:54:08,241 - routers.assets - INFO - [<models.models.Asset object at 0x7fe0912f1b40>]
+2022-10-28 03:54:13,411 - scheduler.worker - INFO - Setting worker status toTrue
+2022-10-28 03:54:13,412 - scheduler.worker - INFO - Starting job for Job ID: d75e6787792d481f97d382bbb14e715e
+2022-10-28 03:54:13,415 - scheduler.inference - INFO - Starting job with prompt:  anime girl, unreal engine, greg rutkowski, loish, rhads, beeple, makoto shinkai and lois van baarle, ilya kuvshinov, rossdraws, tom bagshaw, alphonse mucha, global illumination, detailed and intricate environment
+2022-10-28 03:54:18,602 - scheduler.inference - INFO - added asset - 2ef4d4b4ab5942fda9d2d44b3ff8d65c
+2022-10-28 03:54:18,605 - scheduler.worker - INFO - Setting worker status toFalse
+2022-10-28 03:54:19,508 - routers.assets - INFO - owner - 3
+2022-10-28 03:54:19,511 - routers.assets - INFO - [<models.models.Asset object at 0x7fe0912f1420>]
+2022-10-28 03:54:51,078 - scheduler.worker - INFO - Setting worker status toTrue
+2022-10-28 03:54:51,078 - scheduler.worker - INFO - Starting job for Job ID: 0f1f99c7dab9460bbeaafcfd5e90e8a2
+2022-10-28 03:54:51,082 - scheduler.inference - INFO - Starting job with prompt:  cat, low poly, isometric art, 3d art, high detail, artstation, concept art, behance, ray tracing, smooth, sharp focus, ethereal lighting
+2022-10-28 03:54:56,275 - scheduler.inference - INFO - added asset - d68723d2b917474f9d16c1711856be5a
+2022-10-28 03:54:56,279 - scheduler.worker - INFO - Setting worker status toFalse
+2022-10-28 03:54:57,061 - routers.assets - INFO - owner - 3
+2022-10-28 03:54:57,064 - routers.assets - INFO - [<models.models.Asset object at 0x7fe090570160>]
+2022-10-28 03:55:04,719 - scheduler.worker - INFO - Setting worker status toTrue
+2022-10-28 03:55:04,719 - scheduler.worker - INFO - Starting job for Job ID: bbc98819b9c54d4e8356299bac373c41
+2022-10-28 03:55:04,723 - scheduler.inference - INFO - Starting job with prompt:  cat, low poly, isometric art, 3d art, high detail, artstation, concept art, behance, ray tracing, smooth, sharp focus, ethereal lighting
+2022-10-28 03:55:09,901 - scheduler.inference - INFO - added asset - 4808b40b4e394249bde4372d2c0aff53
+2022-10-28 03:55:09,904 - scheduler.worker - INFO - Setting worker status toFalse
+2022-10-28 03:55:10,828 - routers.assets - INFO - owner - 3
+2022-10-28 03:55:10,831 - routers.assets - INFO - [<models.models.Asset object at 0x7fe0912f1480>]
+2022-10-28 03:55:20,035 - scheduler.worker - INFO - Setting worker status toTrue
+2022-10-28 03:55:20,036 - scheduler.worker - INFO - Starting job for Job ID: d6185fd980e14b35a1704a6b5583bdbd
+2022-10-28 03:55:20,039 - scheduler.inference - INFO - Starting job with prompt:  cat, low poly, isometric art, 3d art, high detail, artstation, concept art, behance, ray tracing, smooth, sharp focus, ethereal lighting
+2022-10-28 03:55:25,224 - scheduler.inference - INFO - added asset - 5484d53232094f0fb4db4f3cc6599ca8
+2022-10-28 03:55:25,228 - scheduler.worker - INFO - Setting worker status toFalse
+2022-10-28 03:55:27,358 - routers.assets - INFO - owner - 3
+2022-10-28 03:55:27,360 - routers.assets - INFO - [<models.models.Asset object at 0x7fe09129f130>]
+2022-10-28 03:55:34,627 - scheduler.worker - INFO - Setting worker status toTrue
+2022-10-28 03:55:34,628 - scheduler.worker - INFO - Starting job for Job ID: 9f925159eac24d548a0149b1546fc3f9
+2022-10-28 03:55:34,631 - scheduler.inference - INFO - Starting job with prompt:  cat, low poly, isometric art, 3d art, high detail, artstation, concept art, behance, ray tracing, smooth, sharp focus, ethereal lighting
+2022-10-28 03:55:39,837 - scheduler.inference - INFO - added asset - 029e3c20ecda4731b2df2c10e0f65c0b
+2022-10-28 03:55:39,841 - scheduler.worker - INFO - Setting worker status toFalse
+2022-10-28 03:55:41,091 - routers.assets - INFO - owner - 3
+2022-10-28 03:55:41,094 - routers.assets - INFO - [<models.models.Asset object at 0x7fe0912f1b10>]
+2022-10-28 03:55:45,261 - routers.assets - INFO - owner - 3
+2022-10-28 03:55:45,262 - routers.assets - INFO - ['d8a2ff8d0d2f419bbddc68c44514bb8d', 'efbee86dc7924660b815eeeb17f21740', '6abe7e67c7d6468d85dd3487c2ba9c67', '0d96eeffba1e4edba9e33e506d912b15', '35de5c9be1df4a929dcd41b9bbae8701', 'fa85ca16b7944768a8f01934efb1485b', 'c460fe6db56148d7b489e0a8c6359272', '95b2ad1af660454c92644184acdc4eac', 'd75e6787792d481f97d382bbb14e715e', '0f1f99c7dab9460bbeaafcfd5e90e8a2', 'bbc98819b9c54d4e8356299bac373c41', 'd6185fd980e14b35a1704a6b5583bdbd', '9f925159eac24d548a0149b1546fc3f9']
+2022-10-28 03:55:45,273 - routers.assets - INFO - ['/home/ec2-user/sdxcrypto/sdxcrypto/3/images/824c02a0ed4d44afbe27d1aa23128d91.jpg', '/home/ec2-user/sdxcrypto/sdxcrypto/3/images/29472a1df4d1420b841fb08f19eb6f64.jpg', '/home/ec2-user/sdxcrypto/sdxcrypto/3/images/3e29768769434ac3b2c44de0ff84ec2e.jpg', '/home/ec2-user/sdxcrypto/sdxcrypto/3/images/8bd91b19c32d4750a5850abdbd2ff773.jpg', '/home/ec2-user/sdxcrypto/sdxcrypto/3/images/19ebbcb190bf408a9fa4ab921a68d309.jpg', '/home/ec2-user/sdxcrypto/sdxcrypto/3/images/df6c0a6a3479495e98589441fddfac49.jpg', '/home/ec2-user/sdxcrypto/sdxcrypto/3/images/ce429d4dd83845908604c1ea4d378196.jpg', '/home/ec2-user/sdxcrypto/sdxcrypto/3/images/28f69df38efa48bbaae94cf3c0c87218.jpg', '/home/ec2-user/sdxcrypto/sdxcrypto/3/images/2ef4d4b4ab5942fda9d2d44b3ff8d65c.jpg', '/home/ec2-user/sdxcrypto/sdxcrypto/3/images/d68723d2b917474f9d16c1711856be5a.jpg', '/home/ec2-user/sdxcrypto/sdxcrypto/3/images/4808b40b4e394249bde4372d2c0aff53.jpg', '/home/ec2-user/sdxcrypto/sdxcrypto/3/images/5484d53232094f0fb4db4f3cc6599ca8.jpg', '/home/ec2-user/sdxcrypto/sdxcrypto/3/images/029e3c20ecda4731b2df2c10e0f65c0b.jpg']
+2022-10-31 15:59:37,898 - scheduler_interface - INFO - Starting scheduler...
+2022-10-31 15:59:41,505 - scheduler.inference - INFO - Base storage set as - /home/ec2-user/sdxcrypto/sdxcrypto
+2022-10-31 15:59:41,505 - scheduler.scheduler - INFO - Worker extended and scheduler started

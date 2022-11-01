@@ -1,51 +1,56 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# C extensions
+*.so
+
+# Distribution / packaging
+bin/
+build/
+develop-eggs/
+dist/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+.tox/
+.coverage
+.cache
+nosetests.xml
+coverage.xml
+
+# Translations
+*.mo
+
+# Mr Developer
+.mr.developer.cfg
+.project
+.pydevproject
+
+# Rope
+.ropeproject
+
+# Django stuff:
+*.log
+*.pot
+
+# Sphinx documentation
+docs/_build/
 .DS_Store
-.huskyrc.json
-out
-log.log
-**/node_modules
-*.pyc
-*.vsix
-**/.vscode/.ropeproject/**
-**/testFiles/**/.cache/**
-*.noseids
-.nyc_output
-.vscode-test
 __pycache__
-npm-debug.log
-**/.mypy_cache/**
-!yarn.lock
-coverage/
-cucumber-report.json
-**/.vscode-test/**
-**/.vscode test/**
-**/.vscode-smoke/**
-**/.venv*/
-port.txt
-precommit.hook
-pythonFiles/lib/**
-debug_coverage*/**
-languageServer/**
-languageServer.*/**
-bin/**
-obj/**
-.pytest_cache
-tmp/**
-.python-version
-.vs/
-test-results*.xml
-xunit-test-results.xml
-build/ci/performance/performance-results.json
-!build/
-debug*.log
-debugpy*.log
-pydevd*.log
-nodeLanguageServer/**
-nodeLanguageServer.*/**
-dist/**
-# translation files
-*.xlf
-*.nls.*.json
-*.i18n.json
 venv/
 .env
 .ipynb_checkpoints
+logs.log
