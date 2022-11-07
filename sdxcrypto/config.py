@@ -1,18 +1,9 @@
-from pydantic import BaseSettings
+import os
+from dotenv import load_dotenv
 
-
-class Settings(BaseSettings):
-    database_hostname: str
-    database_port: str
-    database_password: str
-    database_name: str
-    database_username: str
-    secret_key: str
-    algorithm: str
-    access_token_expire_minutes: int
-    hf_token: str
-
-    class Config:
-        env_file = ".env"
-
-settings = Settings()
+load_dotenv()
+API_KEY = os.getenv('FB_API_KEY')
+DATABASE_URL = os.getenv('FB_DATABASE_URL')
+STORAGE_URL = os.getenv('FB_STORAGE_URL')
+HF_TOKEN = os.getenv('HF_TOKEN')
+GOOGLE_APPLICATION_CREDENTIALS = os.getenv('GOOGLE_APPLICATION_CREDENTIALS')

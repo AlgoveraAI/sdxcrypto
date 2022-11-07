@@ -3,21 +3,12 @@ import os
 import zipfile
 import logging
 from PIL import Image
-from passlib.context import CryptContext
 from fastapi import Response
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
-def hash(password: str):
-    return pwd_context.hash(password)
-
-def verify(plain_password, hashed_password):
-    return pwd_context.verify(plain_password, hashed_password)
-
-def get_bytes_value(image:Image):
-    img_byte_arr = io.BytesIO()
-    image.save(img_byte_arr, format='JPEG')
-    return img_byte_arr.getvalue()
+# def get_bytes_value(image:Image):
+#     img_byte_arr = io.BytesIO()
+#     image.save(img_byte_arr, format='JPEG')
+#     return img_byte_arr.getvalue()
 
 def createLogHandler(job_name, log_file):
     logger = logging.getLogger(job_name)
@@ -35,18 +26,15 @@ def createLogHandler(job_name, log_file):
     logger.addHandler(stream_handler)
     return logger
 
-def zipfiles(filenames):
+def zipfiles(images):
     zip_filename = "archive.zip"
 
     s = io.BytesIO()
     zf = zipfile.ZipFile(s, "w")
 
-    for fpath in filenames:
-        # Calculate path for file in zip
-        fdir, fname = os.path.split(fpath)
-
+    for fn, img in images:
         # Add file, at correct path
-        zf.write(fpath, fname)
+        zf.writestr(fn, img)
 
     # Must close zip for all contents to be written
     zf.close()

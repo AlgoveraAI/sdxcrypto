@@ -1,6 +1,5 @@
 from multiprocessing import Process, Queue, set_start_method
 import os
-import sqlite3
 
 #import from this library
 from scheduler import scheduler

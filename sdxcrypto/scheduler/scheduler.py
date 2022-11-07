@@ -1,10 +1,8 @@
 
 import sys
-from sqlalchemy.orm import Session
 
 #import from this lib
-from db.db import engine
-from models import models
+import firebase
 from scheduler.worker import Worker
 from utils import createLogHandler
 
@@ -17,10 +15,13 @@ def init_scheduler(queue):
         try:
             if not worker.current_job:
                 #get next job in queue
-                job_id = queue.get()
+                job_uuid = queue.get()
                 #get params of the job
-                with Session(engine) as session:
-                    params = session.query(models.Job).filter(models.Job.job_uuid == job_id).first()
+                params = firebase.get_job(job_uuid)
+                params['job_uuid'] = job_uuid
+
+                logger.info(params)
+                
                 #run job
                 worker.run_job(params)
 

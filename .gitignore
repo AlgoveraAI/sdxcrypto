@@ -54,3 +54,4 @@ venv/
 .env
 .ipynb_checkpoints
 logs.log
+key.json

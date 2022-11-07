@@ -1,9 +1,8 @@
-from sqlalchemy.orm import Session
+from datetime import datetime
 
 #import from this library
+import firebase
 from scheduler.inference import Inference
-from models import models
-from db.db import engine
 from utils import createLogHandler
 
 logger = createLogHandler(__name__, 'logs.log')
@@ -18,10 +17,10 @@ class Worker():
     def run_job(self, params):
         #set current_job == True
         self.current_job = True
-        logger.info(f'Setting worker status to{self.current_job}')
+        logger.info(f'Setting worker status to {self.current_job}')
 
         #change job_status == in-process
-        self.job_uuid = params.job_uuid
+        self.job_uuid = params['job_uuid']
         logger.info(f'Starting job for Job ID: {self.job_uuid}')
         self.change_job_status('in-process')
 
@@ -33,10 +32,14 @@ class Worker():
 
         #change current_job ==False
         self.current_job = False
-        logger.info(f'Setting worker status to{self.current_job}')
+        logger.info(f'Setting worker status to {self.current_job}')
 
     def change_job_status(self, changeto):
-        with Session(engine) as session:
-            job_query = session.query(models.Job).filter(models.Job.job_uuid == self.job_uuid).first()
-            job_query.job_status = changeto
-            session.commit()
+        if changeto == 'in-process':
+            toupdate = {'job_status': changeto,
+                        'job_in_process': str(datetime.timestamp(datetime.now()))}
+            firebase.update_job(self.job_uuid, toupdate)
+        else:
+            toupdate = {'job_status': changeto,
+                        'job_done': str(datetime.timestamp(datetime.now()))}
+            firebase.update_job(self.job_uuid, toupdate)
