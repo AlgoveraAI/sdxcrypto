@@ -12,7 +12,8 @@ from firebase import (
 
 router = APIRouter(
     prefix="/users",
-    tags=['Users']
+    tags=['Users'],
+    
 )
 
 logger = createLogHandler(__name__, 'logs.log')

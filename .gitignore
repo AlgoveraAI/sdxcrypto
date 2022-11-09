@@ -55,3 +55,7 @@ venv/
 .ipynb_checkpoints
 logs.log
 key.json
+clip-interrogator/
+src/
+cache/
+tempimages/

@@ -8,14 +8,15 @@ from multiprocessing import set_start_method
 from utils import createLogHandler
 from routers import user, generate, assets
 import scheduler_interface
+from manual_setup import initial_setup
 
-#Create logger
+#CREATE LOGGER
 logger = createLogHandler(__name__, 'logs.log')
 
-#Load env variables
+#EXTEND APP
 app = FastAPI()
 
-#start scheduler
+#START SCHEDULER
 set_start_method('spawn')
 scheduler_interface.init_scheduler()
 
@@ -29,6 +30,7 @@ scheduler_interface.init_scheduler()
 # #     allow_headers=["*"],
 # # )
 
+#SETUP ROUTES
 app.include_router(user.router)
 app.include_router(generate.router)
 app.include_router(assets.router)
@@ -36,3 +38,5 @@ app.include_router(assets.router)
 @app.get("/")
 def root():
     return {"message": "Hello World SDxCrypto"}
+
+

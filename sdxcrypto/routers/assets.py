@@ -31,15 +31,24 @@ def get_asset(reqbody:schemas.AssetListIn):
 def get_asset(reqbody:schemas.AssetGetIn):
     #verify idToken and ownership
     decoded_token = firebase.verify_idToken_ownerId(reqbody)
+    
+    job_uuid = reqbody['job_uuid']
+    job_params = firebase.get_job(job_uuid)
+    job_type = job_params['job_type']
 
-    #download asset from fb store
-    buck = firebase.Bucket()
-    asset = buck.download(decoded_token['uid'], reqbody['job_uuid'])
-    def iterbyte():
-        with io.BytesIO(asset) as f:
-            yield from f
-    # return FileResponse(io.BytesIO(asset))
-    return StreamingResponse(iterbyte(), media_type="image/jpeg")
+    if job_type in ['txt2img', 'img2img', 'clip2img']:
+        #download asset from fb store
+        buck = firebase.Bucket()
+        asset = buck.download(decoded_token['uid'], reqbody['job_uuid'])
+        def iterbyte():
+            with io.BytesIO(asset) as f:
+                yield from f
+        # return FileResponse(io.BytesIO(asset))
+        return StreamingResponse(iterbyte(), media_type="image/jpeg")
+
+    else:
+        prompt = firebase.get_clip_result(job_uuid)
+        return prompt
 
 @router.get("/getAssets", status_code=status.HTTP_200_OK) 
 def get_assets(reqbody:schemas.AssetsGetIn):

@@ -66,7 +66,7 @@ class BaseModels(BaseModel):
 class JobCreateIn(BaseModel):
     base_model: str
     prompt: str 
-    neg_prompt: str
+    neg_prompt: str=""
     idToken: str
     height: int = 512
     width: int = 512
@@ -86,6 +86,48 @@ class JobCreateIn(BaseModel):
 
 class JobCreateOut(BaseModel):
     job_uuid: str
+    
+    @classmethod
+    def __get_validators__(cls):
+        yield cls.validate_to_json
+
+    @classmethod
+    def validate_to_json(cls, value):
+        if isinstance(value, str):
+            return cls(**json.loads(value))
+        return value
+
+class JobCreateClipIn(BaseModel):
+    idToken: str
+    base_model: str=""
+    prompt: str=""
+    neg_prompt: str=""
+    height: int=512
+    width: int=512
+    inf_steps: int=50
+    guidance_scale: float = 7.5
+    seed: int=69
+    
+    @classmethod
+    def __get_validators__(cls):
+        yield cls.validate_to_json
+
+    @classmethod
+    def validate_to_json(cls, value):
+        if isinstance(value, str):
+            return cls(**json.loads(value))
+        return value
+
+class JobCreateClip2ImgIn(BaseModel):
+    idToken: str
+    base_model: str
+    prompt: str=""
+    neg_prompt: str=""
+    height: int=512
+    width: int=512
+    inf_steps: int=50
+    guidance_scale: float = 7.5
+    seed: int=69
     
     @classmethod
     def __get_validators__(cls):

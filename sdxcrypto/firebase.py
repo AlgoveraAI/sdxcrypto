@@ -139,6 +139,7 @@ def delete_basemodels(child):
 def set_job(params:AddJob):
     ref = db.reference('stablediffusion/jobs')
     job_uuid = params.pop('job_uuid')
+    params.pop('idToken')
     ref.child(job_uuid).set({**params})
     return ref.get()
 
@@ -159,6 +160,14 @@ def get_job_by_owner(owner_uuid):
     jobs = [k for k,v in snapshot.items()]
     return jobs
 
+def set_clip_result(job_uuid, prompt):
+    ref = db.reference('stablediffusion/clipresult/')
+    ref.child(job_uuid).set({'prompt':prompt})
+    return ref.get()
+
+def get_clip_result(job_uuid):
+    ref = db.reference(f'stablediffusion/clipresult/{job_uuid}')
+    return ref.get()
 
 #storage
 class Bucket():

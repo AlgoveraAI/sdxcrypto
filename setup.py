@@ -3,6 +3,8 @@ import pathlib
 import pkg_resources
 import setuptools
 
+
+#install requirements 
 with pathlib.Path('requirements.txt').open() as requirements_txt:
     install_requires = [
         str(requirement)
