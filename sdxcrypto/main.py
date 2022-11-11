@@ -6,7 +6,7 @@ from multiprocessing import set_start_method
 
 #imports from this lib
 from utils import createLogHandler
-from routers import user, generate, assets
+from routers import generate, assets
 import scheduler_interface
 from manual_setup import initial_setup
 
@@ -31,7 +31,7 @@ scheduler_interface.init_scheduler()
 # # )
 
 #SETUP ROUTES
-app.include_router(user.router)
+# app.include_router(user.router)
 app.include_router(generate.router)
 app.include_router(assets.router)
 

@@ -5,43 +5,6 @@ from typing import Optional, List
 
 from pydantic.types import conint
 
-class UserOut(BaseModel):
-    kind: str
-    idToken: str
-    email: EmailStr
-    refreshToken: str
-    expiresIn: str
-    localId: str
-
-class UserCreate(BaseModel):
-    email: EmailStr
-    password: str
-
-class UserLogin(BaseModel):
-    email: EmailStr
-    password: str
-
-class UserOutSimple(BaseModel):
-    id: str
-    email: EmailStr
-
-class GetId(BaseModel):
-    uid: str
-
-class JobStatusIn(BaseModel):
-    job_uuid: str
-    idToken:str
-    
-    @classmethod
-    def __get_validators__(cls):
-        yield cls.validate_to_json
-
-    @classmethod
-    def validate_to_json(cls, value):
-        if isinstance(value, str):
-            return cls(**json.loads(value))
-        return value
-
 class JobStatusOut(BaseModel):
     job_uuid: str
     job_status: str
@@ -63,11 +26,22 @@ class BaseModels(BaseModel):
     base_model_name: str
     model_location: str
 
-class JobCreateIn(BaseModel):
-    base_model: str
+class JobCreateTxt2ImgIn(BaseModel):
     prompt: str 
+    uid: str
+    base_model: str="stable-diffusion-v1-5"
     neg_prompt: str=""
-    idToken: str
+    height: int = 512
+    width: int = 512
+    inf_steps:int = 50
+    guidance_scale:float = 7.5
+    seed: int = 69
+
+class JobCreateImg2ImgIn(BaseModel):
+    prompt: str 
+    uid: str
+    base_model: str="stable-diffusion-v1-5"
+    neg_prompt: str=""
     height: int = 512
     width: int = 512
     inf_steps:int = 50
@@ -98,16 +72,16 @@ class JobCreateOut(BaseModel):
         return value
 
 class JobCreateClipIn(BaseModel):
-    idToken: str
-    base_model: str=""
-    prompt: str=""
-    neg_prompt: str=""
-    height: int=512
-    width: int=512
-    inf_steps: int=50
-    guidance_scale: float = 7.5
-    seed: int=69
-    
+    uid: str
+    prompt: str="NA"
+    base_model: str="NA"
+    neg_prompt: str="NA"
+    height: int = 512
+    width: int = 512
+    inf_steps: str="NA"
+    guidance_scale: str="NA"
+    seed: str="NA"
+
     @classmethod
     def __get_validators__(cls):
         yield cls.validate_to_json
@@ -119,16 +93,16 @@ class JobCreateClipIn(BaseModel):
         return value
 
 class JobCreateClip2ImgIn(BaseModel):
-    idToken: str
-    base_model: str
-    prompt: str=""
+    uid: str
+    base_model: str ="stable-diffusion-v1-5"
+    prompt: str="FromClip"
     neg_prompt: str=""
     height: int=512
     width: int=512
     inf_steps: int=50
     guidance_scale: float = 7.5
     seed: int=69
-    
+
     @classmethod
     def __get_validators__(cls):
         yield cls.validate_to_json
@@ -140,7 +114,7 @@ class JobCreateClip2ImgIn(BaseModel):
         return value
 
 class AssetListIn(BaseModel):
-    idToken: str
+    uid: str
     
     @classmethod
     def __get_validators__(cls):
@@ -156,21 +130,8 @@ class AssetListOut(BaseModel):
     assets: List[str]
 
 class AssetGetIn(BaseModel):
-    idToken: str
+    uid: str
     job_uuid: str
-    
-    @classmethod
-    def __get_validators__(cls):
-        yield cls.validate_to_json
-
-    @classmethod
-    def validate_to_json(cls, value):
-        if isinstance(value, str):
-            return cls(**json.loads(value))
-        return value
-
-class AssetsGetIn(BaseModel):
-    idToken: str
     
     @classmethod
     def __get_validators__(cls):
@@ -188,7 +149,7 @@ class AddJob(BaseModel):
     job_created: str
     job_in_process: str
     job_done: str
-    owner_uuid: str
+    uid: str
     base_model: str
     prompt: str
     neg_prompt: str

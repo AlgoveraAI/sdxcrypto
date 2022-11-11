@@ -16,14 +16,17 @@ def init_scheduler(queue):
             if not worker.current_job:
                 #get next job in queue
                 job_uuid = queue.get()
-                #get params of the job
-                params = firebase.get_job(job_uuid)
-                params['job_uuid'] = job_uuid
+                try:
+                    #get params of the job
+                    params = firebase.get_job(job_uuid)
+                    params['job_uuid'] = job_uuid
 
-                logger.info(params)
-                
-                #run job
-                worker.run_job(params)
+                    logger.info(params)
+                    
+                    #run job
+                    worker.run_job(params)
+                except:
+                    logger.error(e)
 
             else:
                 pass
